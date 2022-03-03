@@ -49,7 +49,7 @@
     <property name="bottomMargin">
      <number>200</number>
     </property>
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QFrame" name="centralframe">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -73,7 +73,7 @@
        <property name="horizontalSpacing">
         <number>0</number>
        </property>
-       <item row="8" column="0">
+       <item row="10" column="0">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -94,40 +94,11 @@
            <height>30</height>
           </size>
          </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
          <property name="text">
           <string>Seleccionar Stream</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="download_button">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Descargar</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QLabel" name="label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Roboto</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Descargador de YouTube</string>
          </property>
         </widget>
        </item>
@@ -156,6 +127,22 @@
          </property>
         </widget>
        </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="download_button">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="text">
+          <string>Descargar</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
@@ -169,11 +156,96 @@
          </property>
         </spacer>
        </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Roboto</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Descargador de YouTube</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QProgressBar" name="progress_bar">
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="status_bar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>880</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAplicaci_n">
+    <property name="title">
+     <string>Aplicación</string>
+    </property>
+    <addaction name="about_menu_action"/>
+    <addaction name="restart_menu_action"/>
+    <addaction name="exit_menu_action"/>
+   </widget>
+   <widget class="QMenu" name="menuLenguaje">
+    <property name="title">
+     <string>Lenguaje</string>
+    </property>
+    <addaction name="spanish_menu_action"/>
+    <addaction name="catalan_menu_action"/>
+    <addaction name="english_menu_action"/>
+   </widget>
+   <addaction name="menuAplicaci_n"/>
+   <addaction name="menuLenguaje"/>
+  </widget>
+  <action name="about_menu_action">
+   <property name="text">
+    <string>Acerca de</string>
+   </property>
+  </action>
+  <action name="restart_menu_action">
+   <property name="text">
+    <string>Reiniciar</string>
+   </property>
+  </action>
+  <action name="exit_menu_action">
+   <property name="text">
+    <string>Salir</string>
+   </property>
+  </action>
+  <action name="spanish_menu_action">
+   <property name="text">
+    <string>Español</string>
+   </property>
+  </action>
+  <action name="catalan_menu_action">
+   <property name="text">
+    <string>Català</string>
+   </property>
+  </action>
+  <action name="english_menu_action">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../images.qrc"/>
