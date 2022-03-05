@@ -155,7 +155,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 def main():
     app = QApplication(sys.argv)
-
     translator = QTranslator()
     translator.load("qtbase_" + QLocale.system().name(),
                     QLibraryInfo.location(QLibraryInfo.TranslationsPath))

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'AboutOylMmt.ui'
+## Form generated from reading UI file 'AboutRFGkoy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -38,8 +38,6 @@ class Ui_Dialog(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.top_frame = QFrame(Dialog)
         self.top_frame.setObjectName(u"top_frame")
-        self.top_frame.setFrameShape(QFrame.StyledPanel)
-        self.top_frame.setFrameShadow(QFrame.Raised)
         self.gridLayout = QGridLayout(self.top_frame)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setVerticalSpacing(0)
@@ -86,8 +84,6 @@ class Ui_Dialog(object):
 
         self.bottom_frame = QFrame(Dialog)
         self.bottom_frame.setObjectName(u"bottom_frame")
-        self.bottom_frame.setFrameShape(QFrame.StyledPanel)
-        self.bottom_frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.bottom_frame)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -159,7 +155,7 @@ class Ui_Dialog(object):
         self.title.setText(QCoreApplication.translate("Dialog", u"GUIDownloader", None))
         self.version.setText(QCoreApplication.translate("Dialog", u"Versi\u00f3n 1.0.0 (Compilaci\u00f3n de 03/03/2022 )", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Una aplicaci\u00f3n construida con Python y  Qt (PySide6).", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"Python 3.9 | | PySide6 6.2.3 || PyTube 12.0.0", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", u"Python 3.9 | | PySide6 6.2.3 | | PyTube 12.0.0", None))
         self.label_3.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

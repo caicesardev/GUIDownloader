@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowwiVbaw.ui'
+## Form generated from reading UI file 'MainWindowYxwHhQ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -55,11 +55,8 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(200, 200, 200, 200)
         self.centralframe = QFrame(self.centralwidget)
         self.centralframe.setObjectName(u"centralframe")
-        self.centralframe.setFrameShape(QFrame.StyledPanel)
-        self.centralframe.setFrameShadow(QFrame.Raised)
         self.gridLayout_2 = QGridLayout(self.centralframe)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.gridLayout_2.setHorizontalSpacing(0)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
