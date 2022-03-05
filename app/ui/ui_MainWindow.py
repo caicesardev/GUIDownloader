@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowYxwHhQ.ui'
+## Form generated from reading UI file 'MainWindowWLeXxb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -58,17 +58,6 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QGridLayout(self.centralframe)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_2.addItem(self.verticalSpacer_2, 10, 0, 1, 1)
-
-        self.select_strm_button = QPushButton(self.centralframe)
-        self.select_strm_button.setObjectName(u"select_strm_button")
-        self.select_strm_button.setMinimumSize(QSize(0, 30))
-        self.select_strm_button.setCursor(QCursor(Qt.PointingHandCursor))
-
-        self.gridLayout_2.addWidget(self.select_strm_button, 7, 1, 1, 1)
-
         self.input = QLineEdit(self.centralframe)
         self.input.setObjectName(u"input")
         self.input.setMinimumSize(QSize(0, 25))
@@ -77,16 +66,26 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.input, 6, 0, 1, 2)
 
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer_2, 11, 0, 1, 1)
+
+        self.speed_label = QLabel(self.centralframe)
+        self.speed_label.setObjectName(u"speed_label")
+        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_2.addWidget(self.speed_label, 9, 1, 1, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_2.addItem(self.verticalSpacer, 4, 0, 1, 1)
+
         self.download_button = QPushButton(self.centralframe)
         self.download_button.setObjectName(u"download_button")
         self.download_button.setMinimumSize(QSize(0, 30))
         self.download_button.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout_2.addWidget(self.download_button, 7, 0, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_2.addItem(self.verticalSpacer, 4, 0, 1, 1)
 
         self.label = QLabel(self.centralframe)
         self.label.setObjectName(u"label")
@@ -103,6 +102,13 @@ class Ui_MainWindow(object):
         self.progress_bar.setValue(0)
 
         self.gridLayout_2.addWidget(self.progress_bar, 8, 0, 1, 2)
+
+        self.select_strm_button = QPushButton(self.centralframe)
+        self.select_strm_button.setObjectName(u"select_strm_button")
+        self.select_strm_button.setMinimumSize(QSize(0, 30))
+        self.select_strm_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.gridLayout_2.addWidget(self.select_strm_button, 7, 1, 1, 1)
 
 
         self.gridLayout.addWidget(self.centralframe, 1, 0, 1, 1)
@@ -142,13 +148,14 @@ class Ui_MainWindow(object):
         self.spanish_menu_action.setText(QCoreApplication.translate("MainWindow", u"Espa\u00f1ol", None))
         self.catalan_menu_action.setText(QCoreApplication.translate("MainWindow", u"Catal\u00e0", None))
         self.english_menu_action.setText(QCoreApplication.translate("MainWindow", u"English", None))
-        self.select_strm_button.setText(QCoreApplication.translate("MainWindow", u"Seleccionar Stream", None))
 #if QT_CONFIG(tooltip)
         self.input.setToolTip(QCoreApplication.translate("MainWindow", u"Enlace del v\u00eddeo (Enter para actualizar streams)", None))
 #endif // QT_CONFIG(tooltip)
         self.input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Escribe el enlace del v\u00eddeo", None))
+        self.speed_label.setText("")
         self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
+        self.select_strm_button.setText(QCoreApplication.translate("MainWindow", u"Seleccionar Stream", None))
         self.menuAplicaci_n.setTitle(QCoreApplication.translate("MainWindow", u"Aplicaci\u00f3n", None))
         self.menuLenguaje.setTitle(QCoreApplication.translate("MainWindow", u"Lenguaje", None))
     # retranslateUi
