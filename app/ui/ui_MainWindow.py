@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowsSnDgx.ui'
+## Form generated from reading UI file 'MainWindowyIvbym.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -18,8 +18,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QMenu,
-    QMenuBar, QProgressBar, QPushButton, QSizePolicy,
-    QSpacerItem, QStatusBar, QToolButton, QWidget)
+    QMenuBar, QProgressBar, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QStatusBar, QToolButton,
+    QWidget)
 import images_rc
 
 class Ui_MainWindow(object):
@@ -54,21 +55,65 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(190, 190, 190, 190)
+        self.gridLayout.setContentsMargins(170, 170, 170, 170)
         self.centralframe = QFrame(self.centralwidget)
         self.centralframe.setObjectName(u"centralframe")
         self.gridLayout_2 = QGridLayout(self.centralframe)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.progress_bar = QProgressBar(self.centralframe)
-        self.progress_bar.setObjectName(u"progress_bar")
-        self.progress_bar.setValue(0)
-
-        self.gridLayout_2.addWidget(self.progress_bar, 8, 0, 1, 1)
-
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout_2.addItem(self.verticalSpacer_2, 11, 0, 1, 1)
+        self.gridLayout_2.addItem(self.verticalSpacer_2, 13, 0, 1, 1)
+
+        self.cancel_button = QToolButton(self.centralframe)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setEnabled(False)
+        self.cancel_button.setMinimumSize(QSize(32, 26))
+        self.cancel_button.setCursor(QCursor(Qt.PointingHandCursor))
+        icon1 = QIcon()
+        icon1.addFile(u":/res/images/cancel.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.cancel_button.setIcon(icon1)
+        self.cancel_button.setIconSize(QSize(12, 12))
+
+        self.gridLayout_2.addWidget(self.cancel_button, 9, 2, 1, 1)
+
+        self.input = QLineEdit(self.centralframe)
+        self.input.setObjectName(u"input")
+        self.input.setMinimumSize(QSize(0, 25))
+        self.input.setFont(font)
+        self.input.setClearButtonEnabled(True)
+
+        self.gridLayout_2.addWidget(self.input, 6, 0, 1, 3)
+
+        self.spd_label_frame = QFrame(self.centralframe)
+        self.spd_label_frame.setObjectName(u"spd_label_frame")
+        self.spd_label_frame.setMaximumSize(QSize(16777215, 40))
+        self.horizontalLayout_2 = QHBoxLayout(self.spd_label_frame)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(2, -1, 0, 0)
+        self.mp4_radio_btn = QRadioButton(self.spd_label_frame)
+        self.mp4_radio_btn.setObjectName(u"mp4_radio_btn")
+        self.mp4_radio_btn.setChecked(True)
+
+        self.horizontalLayout_2.addWidget(self.mp4_radio_btn)
+
+        self.mp3_radio_btn = QRadioButton(self.spd_label_frame)
+        self.mp3_radio_btn.setObjectName(u"mp3_radio_btn")
+
+        self.horizontalLayout_2.addWidget(self.mp3_radio_btn)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+        self.speed_label = QLabel(self.spd_label_frame)
+        self.speed_label.setObjectName(u"speed_label")
+        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_2.addWidget(self.speed_label)
+
+
+        self.gridLayout_2.addWidget(self.spd_label_frame, 11, 0, 1, 3)
 
         self.buttons_frame = QFrame(self.centralframe)
         self.buttons_frame.setObjectName(u"buttons_frame")
@@ -83,31 +128,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.download_button)
 
-        self.select_strm_button = QPushButton(self.buttons_frame)
-        self.select_strm_button.setObjectName(u"select_strm_button")
-        self.select_strm_button.setMinimumSize(QSize(0, 30))
-        self.select_strm_button.setCursor(QCursor(Qt.PointingHandCursor))
 
-        self.horizontalLayout.addWidget(self.select_strm_button)
+        self.gridLayout_2.addWidget(self.buttons_frame, 10, 0, 1, 3)
 
+        self.progress_bar = QProgressBar(self.centralframe)
+        self.progress_bar.setObjectName(u"progress_bar")
+        self.progress_bar.setValue(0)
 
-        self.gridLayout_2.addWidget(self.buttons_frame, 7, 0, 1, 3)
-
-        self.cancel_button = QToolButton(self.centralframe)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setEnabled(False)
-        self.cancel_button.setMinimumSize(QSize(32, 26))
-        self.cancel_button.setCursor(QCursor(Qt.PointingHandCursor))
-        icon1 = QIcon()
-        icon1.addFile(u":/res/images/cancel.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.cancel_button.setIcon(icon1)
-        self.cancel_button.setIconSize(QSize(12, 12))
-
-        self.gridLayout_2.addWidget(self.cancel_button, 8, 2, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_2.addItem(self.verticalSpacer, 4, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.progress_bar, 9, 0, 1, 1)
 
         self.label = QLabel(self.centralframe)
         self.label.setObjectName(u"label")
@@ -119,13 +147,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.label, 5, 0, 1, 3)
 
-        self.input = QLineEdit(self.centralframe)
-        self.input.setObjectName(u"input")
-        self.input.setMinimumSize(QSize(0, 25))
-        self.input.setFont(font)
-        self.input.setClearButtonEnabled(True)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout_2.addWidget(self.input, 6, 0, 1, 3)
+        self.gridLayout_2.addItem(self.verticalSpacer, 4, 0, 1, 1)
 
         self.play_pause_button = QToolButton(self.centralframe)
         self.play_pause_button.setObjectName(u"play_pause_button")
@@ -138,21 +162,11 @@ class Ui_MainWindow(object):
         self.play_pause_button.setIcon(icon2)
         self.play_pause_button.setCheckable(True)
 
-        self.gridLayout_2.addWidget(self.play_pause_button, 8, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.play_pause_button, 9, 1, 1, 1)
 
-        self.spd_label_frame = QFrame(self.centralframe)
-        self.spd_label_frame.setObjectName(u"spd_label_frame")
-        self.spd_label_frame.setMaximumSize(QSize(16777215, 40))
-        self.horizontalLayout_2 = QHBoxLayout(self.spd_label_frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.speed_label = QLabel(self.spd_label_frame)
-        self.speed_label.setObjectName(u"speed_label")
-        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.verticalSpacer_3 = QSpacerItem(20, 9, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
-        self.horizontalLayout_2.addWidget(self.speed_label)
-
-
-        self.gridLayout_2.addWidget(self.spd_label_frame, 9, 0, 1, 3)
+        self.gridLayout_2.addItem(self.verticalSpacer_3, 7, 0, 1, 1)
 
 
         self.gridLayout.addWidget(self.centralframe, 0, 0, 2, 1)
@@ -207,16 +221,27 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.aboutqt_menu_action.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Shift+H", None))
 #endif // QT_CONFIG(shortcut)
-        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
-        self.select_strm_button.setText(QCoreApplication.translate("MainWindow", u"Seleccionar Stream", None))
 #if QT_CONFIG(tooltip)
         self.cancel_button.setToolTip(QCoreApplication.translate("MainWindow", u"Cancelar descarga", None))
 #endif // QT_CONFIG(tooltip)
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
 #if QT_CONFIG(tooltip)
         self.input.setToolTip(QCoreApplication.translate("MainWindow", u"Enlace del v\u00eddeo (Enter para actualizar streams)", None))
 #endif // QT_CONFIG(tooltip)
         self.input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Escribe el enlace del v\u00eddeo", None))
+#if QT_CONFIG(tooltip)
+        self.mp4_radio_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeos en formato MP4", None))
+#endif // QT_CONFIG(tooltip)
+        self.mp4_radio_btn.setText(QCoreApplication.translate("MainWindow", u"MP4", None))
+#if QT_CONFIG(tooltip)
+        self.mp3_radio_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeos en formato MP3", None))
+#endif // QT_CONFIG(tooltip)
+        self.mp3_radio_btn.setText(QCoreApplication.translate("MainWindow", u"MP3", None))
+        self.speed_label.setText("")
+#if QT_CONFIG(tooltip)
+        self.download_button.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeo", None))
+#endif // QT_CONFIG(tooltip)
+        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
 #if QT_CONFIG(tooltip)
         self.play_pause_button.setToolTip(QCoreApplication.translate("MainWindow", u"Reanudar/Pausar descarga", None))
 #endif // QT_CONFIG(tooltip)
