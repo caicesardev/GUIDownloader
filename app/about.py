@@ -19,6 +19,9 @@ class About(QDialog, Ui_Dialog):
         super(About, self).__init__(parent)
 
         self.setupUi(self)
+
+        self.btn_box.accepted.connect(self.accept)
+
         self.exec_()
 
 

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
-    <height>600</height>
+    <width>700</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>880</width>
-    <height>600</height>
+    <width>700</width>
+    <height>450</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -34,6 +34,9 @@
   <property name="windowIcon">
    <iconset resource="../images.qrc">
     <normaloff>:/res/images/downloading.png</normaloff>:/res/images/downloading.png</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -91,6 +94,19 @@
         </property>
        </spacer>
       </item>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item row="0" column="1">
        <widget class="QLabel" name="logo">
         <property name="maximumSize">
@@ -113,24 +129,14 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="bottom_frame">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
        <number>0</number>
@@ -203,7 +209,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Python 3.9 | | PySide6 6.2.3 | | PyTube 12.0.0</string>
+         <string>Python3.9 | | PySide6.2.3 | | PyTube12.0.0</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -274,6 +280,13 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="textInteractionFlags">
          <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDialogButtonBox" name="btn_box">
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Ok</set>
         </property>
        </widget>
       </item>

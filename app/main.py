@@ -8,7 +8,6 @@ from about import About
 
 from pytube import YouTube
 from hurry.filesize import size, si
-
 from PySide6.QtCore import (
     QLibraryInfo,
     QLocale,
@@ -17,37 +16,53 @@ from PySide6.QtCore import (
     QThread,
     Signal,
 )
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
     QMenu,
     QMessageBox,
+    QStyle
 )
 
 __version__ = "1.0.0"
 
 
 # Worker class.
-class Worker(QObject):
+class Worker(QThread):
     finished = Signal()
     progress = Signal(int)
     speed = Signal(float)
+    is_running = Signal()
 
-    def __init__(self, url):
+    def __init__(self, url=""):
         super(Worker, self).__init__()
 
         self.url = url
+        self.is_running = True
+        self.username = os.getlogin()
 
     def run(self):
-        windows_dir = "C:/users/%username%/Downloads/%(title)s.%(ext)s"
+        windows_dir = f"C:/users/{self.username}/Downloads/%(title)s.%(ext)s"
         linux_dir = "/home/downloads/%(title)%s.%(ext)s"
         ydl_opts = {
             "progress_hooks": [self.callable_hook],
-            'outtmpl': windows_dir if os.name == "nt" else linux_dir
+            "outtmpl": windows_dir if os.name == "nt" else linux_dir
         }
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([self.url])
-        self.finished.emit()
+        with youtube_dl.YoutubeDL(ydl_opts) as self.ydl:
+            self.ydl.download([self.url])
+
+    def stop(self):
+        print("Worker Thread stopped.")
+        self.is_running = False
+        self.terminate()
+
+    def cancel(self):
+        print("Worker Thread stopped and killed.")
+        yt = YouTube(self.url)
+        d_file = f"C:/users/{self.username}/Downloads/{yt.title}.mp4.part"
+        self.terminate()
+        os.remove(d_file)
 
     def callable_hook(self, response):
         if response["status"] == "downloading":
@@ -65,9 +80,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.init_ui()
 
-        self.input.editingFinished.connect(
-            self.handle_editing_finished)
-
         # self.input.returnPressed.connect(
         #    lambda: self.update_menu_stream(self.input.text()))
 
@@ -79,46 +91,81 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Menu buttons
         self.about_menu_action.triggered.connect(About)
+        self.aboutqt_menu_action.triggered.connect(QApplication.aboutQt)
         self.restart_menu_action.triggered.connect(self.on_restart)
         self.exit_menu_action.triggered.connect(sys.exit)
+        self.play_pause_button.clicked.connect(self.handle_play_stop_button)
+        self.cancel_button.clicked.connect(self.cancel_download)
+
+        self.worker = Worker()
+
+        pixmap = QStyle.SP_TitleBarMenuButton
+        icon = self.style().standardIcon(pixmap)
+        self.aboutqt_menu_action.setIcon(QIcon(icon))
+
+        pixmap2 = QStyle.SP_MessageBoxQuestion
+        icon2 = self.style().standardIcon(pixmap2)
+        self.about_menu_action.setIcon(QIcon(icon2))
+
+        pixmap3 = QStyle.SP_BrowserReload
+        icon3 = self.style().standardIcon(pixmap3)
+        self.restart_menu_action.setIcon(QIcon(icon3))
+
+        pixmap4 = QStyle.SP_ArrowLeft
+        icon4 = self.style().standardIcon(pixmap4)
+        self.exit_menu_action.setIcon(QIcon(icon4))
 
         self.status_bar.showMessage("Bienvenido", 5000)
 
     def download(self):
         try:
             self.yt = YouTube(self.input.text())
+            self.username = os.getlogin()
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
             self.download_button.setEnabled(False)
             self.download_button.setText("Actualmente descargando...")
+            self.play_pause_button.setEnabled(True)
+            self.cancel_button.setEnabled(True)
 
-            # Create a QThread object.
-            self.thread = QThread()
             # Create a worker object.
-            self.worker = Worker(self.input.text())
-            # Move worker to the thread.
-            self.worker.moveToThread(self.thread)
-            # Connect signals and slots
-            self.thread.started.connect(self.worker.run)
-            self.worker.finished.connect(self.thread.quit)
-            self.worker.finished.connect(self.on_download_finished)
-            self.worker.finished.connect(self.worker.deleteLater)
-            self.thread.finished.connect(self.thread.deleteLater)
-
+            self.worker = Worker(url=self.input.text())
             self.worker.progress.connect(self.update_progress_bar)
             self.worker.progress.connect(self.update_status_bar)
             self.worker.speed.connect(self.update_speed_lbl)
+            # Connect signals and slots
+            path = f"C:/users/{self.username}/Downloads/{self.yt.title}.mp4"
+            # If the file is downloaded.
+            if os.path.exists(path):
+                self.worker.finished.connect(self.on_download_finished)
 
-            self.thread.start()
+            # self.thread.start()
+            self.worker.start()
 
         except Exception:
             self.download_button.setEnabled(True)
             self.download_button.setText("Descargar")
+            self.play_pause_button.setEnabled(False)
+            self.cancel_button.setEnabled(False)
             QMessageBox.information(
                 self,
                 "Enlace no válido",
                 "El enlace introducido no es válido o no se pudo recopilar.")
+
+    def handle_play_stop_button(self):
+        if self.play_pause_button.isChecked():
+            self.worker.stop()
+        else:
+            self.download()
+
+    def cancel_download(self):
+        answer = QMessageBox.question(
+            self,
+            "Confirmar cancelación de la descarga",
+            "¿Estás seguro que quiere cancelar la descarga?")
+        if answer == QMessageBox.Yes:
+            self.worker.cancel()
 
     def update_progress_bar(self, value):
         self.progress_bar.setValue(value)
@@ -139,12 +186,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f"Se ha completado la descarga de {self.yt.title}.mp4")
         self.download_button.setText("Descargar")
         self.download_button.setEnabled(True)
-
-    def handle_editing_finished(self):
-        if self.input.isModified():
-            self.url = self.input.text()
-            # self.update_menu_stream(self.url)
-        self.input.setModified(False)
 
     """ 
     def update_menu_stream(self, url):

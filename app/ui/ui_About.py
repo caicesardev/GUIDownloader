@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'AboutRFGkoy.ui'
+## Form generated from reading UI file 'AboutcHlvnb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -15,16 +15,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
-    QLabel, QSizePolicy, QSpacerItem, QVBoxLayout)
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
+    QFrame, QGridLayout, QLabel, QSizePolicy,
+    QSpacerItem, QVBoxLayout)
 import images_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(880, 600)
-        Dialog.setMinimumSize(QSize(880, 600))
+        Dialog.resize(700, 450)
+        Dialog.setMinimumSize(QSize(700, 450))
         Dialog.setMaximumSize(QSize(880, 600))
         font = QFont()
         font.setFamilies([u"Roboto"])
@@ -33,6 +34,7 @@ class Ui_Dialog(object):
         icon = QIcon()
         icon.addFile(u":/res/images/downloading.png", QSize(), QIcon.Normal, QIcon.Off)
         Dialog.setWindowIcon(icon)
+        Dialog.setSizeGripEnabled(True)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -65,6 +67,10 @@ class Ui_Dialog(object):
 
         self.gridLayout.addItem(self.horizontalSpacer_2, 0, 2, 1, 1)
 
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout.addItem(self.horizontalSpacer, 0, 0, 1, 1)
+
         self.logo = QLabel(self.top_frame)
         self.logo.setObjectName(u"logo")
         self.logo.setMaximumSize(QSize(150, 140))
@@ -75,15 +81,12 @@ class Ui_Dialog(object):
 
         self.gridLayout.addWidget(self.logo, 0, 1, 1, 1)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout.addItem(self.horizontalSpacer, 0, 0, 1, 1)
-
 
         self.verticalLayout.addWidget(self.top_frame)
 
         self.bottom_frame = QFrame(Dialog)
         self.bottom_frame.setObjectName(u"bottom_frame")
+        self.bottom_frame.setFocusPolicy(Qt.ClickFocus)
         self.verticalLayout_3 = QVBoxLayout(self.bottom_frame)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -141,6 +144,12 @@ class Ui_Dialog(object):
 
         self.verticalLayout_3.addWidget(self.copyright)
 
+        self.btn_box = QDialogButtonBox(self.bottom_frame)
+        self.btn_box.setObjectName(u"btn_box")
+        self.btn_box.setStandardButtons(QDialogButtonBox.Ok)
+
+        self.verticalLayout_3.addWidget(self.btn_box)
+
 
         self.verticalLayout.addWidget(self.bottom_frame)
 
@@ -155,7 +164,7 @@ class Ui_Dialog(object):
         self.title.setText(QCoreApplication.translate("Dialog", u"GUIDownloader", None))
         self.version.setText(QCoreApplication.translate("Dialog", u"Versi\u00f3n 1.0.0 (Compilaci\u00f3n de 03/03/2022 )", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Una aplicaci\u00f3n construida con Python y  Qt (PySide6).", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"Python 3.9 | | PySide6 6.2.3 | | PyTube 12.0.0", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", u"Python3.9 | | PySide6.2.3 | | PyTube12.0.0", None))
         self.label_3.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
