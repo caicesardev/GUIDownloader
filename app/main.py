@@ -1,7 +1,7 @@
 import sys
 import os
 import subprocess
-import youtube_dl
+import yt_dlp
 
 from ui.ui_MainWindow import Ui_MainWindow
 from about import About
@@ -49,8 +49,13 @@ class Worker(QThread):
             "progress_hooks": [self.callable_hook],
             "outtmpl": windows_dir if os.name == "nt" else linux_dir
         }
-        with youtube_dl.YoutubeDL(ydl_opts) as self.ydl:
-            self.ydl.download([self.url])
+        with yt_dlp.YoutubeDL(ydl_opts) as self.ytdl:
+            self.ytdl.download([self.url])
+
+        path = f"C:/users/{self.username}/Downloads/%(title)s.%(ext)s"
+        # If the file is downloaded.
+        if os.path.exists(path):
+            self.finished.emit()
 
     def stop(self):
         print("Worker Thread stopped.")
@@ -135,10 +140,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.worker.progress.connect(self.update_status_bar)
             self.worker.speed.connect(self.update_speed_lbl)
             # Connect signals and slots
-            path = f"C:/users/{self.username}/Downloads/{self.yt.title}.mp4"
-            # If the file is downloaded.
-            if os.path.exists(path):
-                self.worker.finished.connect(self.on_download_finished)
+            self.worker.finished.connect(self.on_download_finished)
 
             # self.thread.start()
             self.worker.start()
@@ -174,7 +176,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.status_bar.showMessage(f"Descargando {self.yt.title} || {value}%")
 
     def update_speed_lbl(self, value):
-        self.speed_label.setText(f"Velocidad: {size(value, system=si)}/s")
+        self.speed_label.setText(f"Velocidad: {size(value, system=si)}B/s")
 
     def on_download_finished(self):
         self.status_bar.showMessage("Descarga finalizada", 3000)
