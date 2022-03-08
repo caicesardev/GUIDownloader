@@ -1,3 +1,4 @@
+from importlib.resources import path
 import sys
 import os
 import subprocess
@@ -31,6 +32,7 @@ __version__ = "1.0.0"
 # Worker class.
 class Worker(QThread):
     finished = Signal()
+    d_finished = Signal()
     progress = Signal(int)
     speed = Signal(float)
     is_running = Signal()
@@ -52,10 +54,7 @@ class Worker(QThread):
         with yt_dlp.YoutubeDL(ydl_opts) as self.ytdl:
             self.ytdl.download([self.url])
 
-        path = f"C:/users/{self.username}/Downloads/%(title)s.%(ext)s"
-        # If the file is downloaded.
-        if os.path.exists(path):
-            self.finished.emit()
+        self.d_finished.emit()
 
     def stop(self):
         print("Worker Thread stopped.")
@@ -129,21 +128,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
-            self.download_button.setEnabled(False)
-            self.download_button.setText("Actualmente descargando...")
-            self.play_pause_button.setEnabled(True)
-            self.cancel_button.setEnabled(True)
+            path = f"C:/users/{self.username}/Downloads/{self.yt.title}.mp4"
+            # If the file is not yet downloaded.
+            if not os.path.exists(path):
+                self.download_button.setEnabled(False)
+                self.download_button.setText("Actualmente descargando...")
+                self.play_pause_button.setEnabled(True)
+                self.cancel_button.setEnabled(True)
 
-            # Create a worker object.
-            self.worker = Worker(url=self.input.text())
-            self.worker.progress.connect(self.update_progress_bar)
-            self.worker.progress.connect(self.update_status_bar)
-            self.worker.speed.connect(self.update_speed_lbl)
-            # Connect signals and slots
-            self.worker.finished.connect(self.on_download_finished)
+                # Create a worker object.
+                self.worker = Worker(url=self.input.text())
+                self.worker.progress.connect(self.update_progress_bar)
+                self.worker.progress.connect(self.update_status_bar)
+                self.worker.speed.connect(self.update_speed_lbl)
+                # Connect signals and slots
+                self.worker.d_finished.connect(self.on_download_finished)
 
-            # self.thread.start()
-            self.worker.start()
+                self.worker.start()
+            else:
+                QMessageBox.information(
+                    self,
+                    "Vídeo ya descargado",
+                    "El vídeo ya está descargado.")
 
         except Exception:
             self.download_button.setEnabled(True)
@@ -165,7 +171,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         answer = QMessageBox.question(
             self,
             "Confirmar cancelación de la descarga",
-            "¿Estás seguro que quiere cancelar la descarga?")
+            "¿Estás seguro de que quieres cancelar la descarga?")
         if answer == QMessageBox.Yes:
             self.worker.cancel()
 
