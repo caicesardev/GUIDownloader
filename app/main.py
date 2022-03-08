@@ -41,25 +41,29 @@ class Worker(QThread):
         super(Worker, self).__init__()
 
         self.url = url
+        self.resuming = False
         self.is_running = True
         self.username = os.getlogin()
 
     def run(self):
-        windows_dir = f"C:/users/{self.username}/Downloads/%(title)s.%(ext)s"
+        windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         linux_dir = "/home/downloads/%(title)%s.%(ext)s"
-        ydl_opts = {
+        self.ydl_opts = {
             "progress_hooks": [self.callable_hook],
             "outtmpl": windows_dir if os.name == "nt" else linux_dir
         }
-        with yt_dlp.YoutubeDL(ydl_opts) as self.ytdl:
+
+        with yt_dlp.YoutubeDL(self.ydl_opts) as self.ytdl:
+            print("\n--> is_running from with:", self.is_running)
             self.ytdl.download([self.url])
 
         self.d_finished.emit()
 
     def stop(self):
-        print("Worker Thread stopped.")
+        print("\n -> Worker Thread stopped <-")
         self.is_running = False
-        self.terminate()
+        self.quit()
+        self.wait()
 
     def cancel(self):
         print("Worker Thread stopped and killed.")
@@ -145,6 +149,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.worker.d_finished.connect(self.on_download_finished)
 
                 self.worker.start()
+
             else:
                 QMessageBox.information(
                     self,
@@ -165,6 +170,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.play_pause_button.isChecked():
             self.worker.stop()
         else:
+            self.worker.is_running = True
             self.download()
 
     def cancel_download(self):
@@ -188,6 +194,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.status_bar.showMessage("Descarga finalizada", 3000)
         self.progress_bar.setValue(0)
         self.speed_label.clear()
+        self.play_pause_button.setEnabled(False)
+        self.cancel_button.setEnabled(False)
         QMessageBox.information(
             self,
             "Descarga completada",
@@ -195,7 +203,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.download_button.setText("Descargar")
         self.download_button.setEnabled(True)
 
-    """ 
+    """
     def update_menu_stream(self, url):
         # Streams menu.
         menu = QMenu(self)

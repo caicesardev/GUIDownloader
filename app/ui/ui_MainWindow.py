@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowyIvbym.ui'
+## Form generated from reading UI file 'MainWindowdWjqko.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -16,20 +16,19 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QMenu,
-    QMenuBar, QProgressBar, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QStatusBar, QToolButton,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
+    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+    QMenu, QMenuBar, QProgressBar, QPushButton,
+    QRadioButton, QSizePolicy, QSpacerItem, QStatusBar,
+    QToolButton, QWidget)
 import images_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(880, 600)
-        MainWindow.setMinimumSize(QSize(880, 600))
-        MainWindow.setMaximumSize(QSize(880, 600))
+        MainWindow.resize(440, 335)
+        MainWindow.setMinimumSize(QSize(440, 335))
         font = QFont()
         font.setFamilies([u"Roboto"])
         font.setPointSize(10)
@@ -55,15 +54,33 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(170, 170, 170, 170)
-        self.centralframe = QFrame(self.centralwidget)
-        self.centralframe.setObjectName(u"centralframe")
-        self.gridLayout_2 = QGridLayout(self.centralframe)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout.addItem(self.horizontalSpacer_3, 1, 2, 2, 1)
+
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.gridLayout_2.addItem(self.verticalSpacer_2, 13, 0, 1, 1)
+        self.gridLayout.addItem(self.verticalSpacer_2, 3, 1, 1, 1)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout.addItem(self.horizontalSpacer_2, 1, 0, 2, 1)
+
+        self.centralframe = QFrame(self.centralwidget)
+        self.centralframe.setObjectName(u"centralframe")
+        self.centralframe.setMinimumSize(QSize(410, 300))
+        self.gridLayout_2 = QGridLayout(self.centralframe)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.gridLayout_2.setVerticalSpacing(0)
+        self.label = QLabel(self.centralframe)
+        self.label.setObjectName(u"label")
+        self.label.setMaximumSize(QSize(16777215, 20))
+        font1 = QFont()
+        font1.setFamilies([u"Roboto"])
+        font1.setPointSize(11)
+        self.label.setFont(font1)
+
+        self.gridLayout_2.addWidget(self.label, 5, 0, 1, 3)
 
         self.cancel_button = QToolButton(self.centralframe)
         self.cancel_button.setObjectName(u"cancel_button")
@@ -76,80 +93,6 @@ class Ui_MainWindow(object):
         self.cancel_button.setIconSize(QSize(12, 12))
 
         self.gridLayout_2.addWidget(self.cancel_button, 9, 2, 1, 1)
-
-        self.input = QLineEdit(self.centralframe)
-        self.input.setObjectName(u"input")
-        self.input.setMinimumSize(QSize(0, 25))
-        self.input.setFont(font)
-        self.input.setClearButtonEnabled(True)
-
-        self.gridLayout_2.addWidget(self.input, 6, 0, 1, 3)
-
-        self.spd_label_frame = QFrame(self.centralframe)
-        self.spd_label_frame.setObjectName(u"spd_label_frame")
-        self.spd_label_frame.setMaximumSize(QSize(16777215, 40))
-        self.horizontalLayout_2 = QHBoxLayout(self.spd_label_frame)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(2, -1, 0, 0)
-        self.mp4_radio_btn = QRadioButton(self.spd_label_frame)
-        self.mp4_radio_btn.setObjectName(u"mp4_radio_btn")
-        self.mp4_radio_btn.setChecked(True)
-
-        self.horizontalLayout_2.addWidget(self.mp4_radio_btn)
-
-        self.mp3_radio_btn = QRadioButton(self.spd_label_frame)
-        self.mp3_radio_btn.setObjectName(u"mp3_radio_btn")
-
-        self.horizontalLayout_2.addWidget(self.mp3_radio_btn)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer)
-
-        self.speed_label = QLabel(self.spd_label_frame)
-        self.speed_label.setObjectName(u"speed_label")
-        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.horizontalLayout_2.addWidget(self.speed_label)
-
-
-        self.gridLayout_2.addWidget(self.spd_label_frame, 11, 0, 1, 3)
-
-        self.buttons_frame = QFrame(self.centralframe)
-        self.buttons_frame.setObjectName(u"buttons_frame")
-        self.buttons_frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout = QHBoxLayout(self.buttons_frame)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.download_button = QPushButton(self.buttons_frame)
-        self.download_button.setObjectName(u"download_button")
-        self.download_button.setMinimumSize(QSize(0, 30))
-        self.download_button.setCursor(QCursor(Qt.PointingHandCursor))
-
-        self.horizontalLayout.addWidget(self.download_button)
-
-
-        self.gridLayout_2.addWidget(self.buttons_frame, 10, 0, 1, 3)
-
-        self.progress_bar = QProgressBar(self.centralframe)
-        self.progress_bar.setObjectName(u"progress_bar")
-        self.progress_bar.setValue(0)
-
-        self.gridLayout_2.addWidget(self.progress_bar, 9, 0, 1, 1)
-
-        self.label = QLabel(self.centralframe)
-        self.label.setObjectName(u"label")
-        self.label.setMaximumSize(QSize(16777215, 20))
-        font1 = QFont()
-        font1.setFamilies([u"Roboto"])
-        font1.setPointSize(11)
-        self.label.setFont(font1)
-
-        self.gridLayout_2.addWidget(self.label, 5, 0, 1, 3)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_2.addItem(self.verticalSpacer, 4, 0, 1, 1)
 
         self.play_pause_button = QToolButton(self.centralframe)
         self.play_pause_button.setObjectName(u"play_pause_button")
@@ -166,10 +109,79 @@ class Ui_MainWindow(object):
 
         self.verticalSpacer_3 = QSpacerItem(20, 9, QSizePolicy.Minimum, QSizePolicy.Fixed)
 
-        self.gridLayout_2.addItem(self.verticalSpacer_3, 7, 0, 1, 1)
+        self.gridLayout_2.addItem(self.verticalSpacer_3, 7, 0, 1, 3)
+
+        self.input = QLineEdit(self.centralframe)
+        self.input.setObjectName(u"input")
+        self.input.setMinimumSize(QSize(0, 25))
+        self.input.setFont(font)
+        self.input.setClearButtonEnabled(True)
+
+        self.gridLayout_2.addWidget(self.input, 6, 0, 1, 3)
+
+        self.progress_bar = QProgressBar(self.centralframe)
+        self.progress_bar.setObjectName(u"progress_bar")
+        self.progress_bar.setValue(0)
+
+        self.gridLayout_2.addWidget(self.progress_bar, 9, 0, 1, 1)
+
+        self.buttons_frame = QFrame(self.centralframe)
+        self.buttons_frame.setObjectName(u"buttons_frame")
+        self.buttons_frame.setMaximumSize(QSize(16777215, 40))
+        self.buttons_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout = QHBoxLayout(self.buttons_frame)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.download_button = QPushButton(self.buttons_frame)
+        self.download_button.setObjectName(u"download_button")
+        self.download_button.setMinimumSize(QSize(0, 30))
+        self.download_button.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout.addWidget(self.download_button)
 
 
-        self.gridLayout.addWidget(self.centralframe, 0, 0, 2, 1)
+        self.gridLayout_2.addWidget(self.buttons_frame, 10, 0, 1, 3)
+
+        self.spd_label_frame = QFrame(self.centralframe)
+        self.spd_label_frame.setObjectName(u"spd_label_frame")
+        self.spd_label_frame.setMaximumSize(QSize(16777215, 65))
+        self.horizontalLayout_2 = QHBoxLayout(self.spd_label_frame)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_2.setContentsMargins(2, 0, 0, 0)
+        self.groupBox = QGroupBox(self.spd_label_frame)
+        self.groupBox.setObjectName(u"groupBox")
+        self.horizontalLayout_3 = QHBoxLayout(self.groupBox)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(-1, 0, -1, 0)
+        self.mp4_radio_btn = QRadioButton(self.groupBox)
+        self.mp4_radio_btn.setObjectName(u"mp4_radio_btn")
+        self.mp4_radio_btn.setChecked(True)
+
+        self.horizontalLayout_3.addWidget(self.mp4_radio_btn)
+
+        self.mp3_radio_btn = QRadioButton(self.groupBox)
+        self.mp3_radio_btn.setObjectName(u"mp3_radio_btn")
+
+        self.horizontalLayout_3.addWidget(self.mp3_radio_btn)
+
+
+        self.horizontalLayout_2.addWidget(self.groupBox)
+
+        self.speed_label = QLabel(self.spd_label_frame)
+        self.speed_label.setObjectName(u"speed_label")
+        self.speed_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_2.addWidget(self.speed_label)
+
+
+        self.gridLayout_2.addWidget(self.spd_label_frame, 11, 0, 1, 3)
+
+
+        self.gridLayout.addWidget(self.centralframe, 1, 1, 2, 1)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout.addItem(self.verticalSpacer, 0, 1, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.status_bar = QStatusBar(MainWindow)
@@ -177,7 +189,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.status_bar)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 880, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 440, 22))
         self.menuBar.setStyleSheet(u"b")
         self.menuAplicaci_n = QMenu(self.menuBar)
         self.menuAplicaci_n.setObjectName(u"menuAplicaci_n")
@@ -221,13 +233,23 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.aboutqt_menu_action.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+Shift+H", None))
 #endif // QT_CONFIG(shortcut)
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
 #if QT_CONFIG(tooltip)
         self.cancel_button.setToolTip(QCoreApplication.translate("MainWindow", u"Cancelar descarga", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
+        self.play_pause_button.setToolTip(QCoreApplication.translate("MainWindow", u"Reanudar/Pausar descarga", None))
+#endif // QT_CONFIG(tooltip)
+        self.play_pause_button.setText("")
+#if QT_CONFIG(tooltip)
         self.input.setToolTip(QCoreApplication.translate("MainWindow", u"Enlace del v\u00eddeo (Enter para actualizar streams)", None))
 #endif // QT_CONFIG(tooltip)
         self.input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Escribe el enlace del v\u00eddeo", None))
+#if QT_CONFIG(tooltip)
+        self.download_button.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeo", None))
+#endif // QT_CONFIG(tooltip)
+        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Formato", None))
 #if QT_CONFIG(tooltip)
         self.mp4_radio_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeos en formato MP4", None))
 #endif // QT_CONFIG(tooltip)
@@ -237,15 +259,6 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.mp3_radio_btn.setText(QCoreApplication.translate("MainWindow", u"MP3", None))
         self.speed_label.setText("")
-#if QT_CONFIG(tooltip)
-        self.download_button.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeo", None))
-#endif // QT_CONFIG(tooltip)
-        self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
-#if QT_CONFIG(tooltip)
-        self.play_pause_button.setToolTip(QCoreApplication.translate("MainWindow", u"Reanudar/Pausar descarga", None))
-#endif // QT_CONFIG(tooltip)
-        self.play_pause_button.setText("")
         self.menuAplicaci_n.setTitle(QCoreApplication.translate("MainWindow", u"Aplicaci\u00f3n", None))
         self.menuLenguaje.setTitle(QCoreApplication.translate("MainWindow", u"Lenguaje", None))
     # retranslateUi
