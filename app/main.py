@@ -59,18 +59,13 @@ class Worker(QThread):
 
         self.d_finished.emit()
 
-    def stop(self):
-        print("\n -> Worker Thread stopped <-")
-        self.is_running = False
-        self.quit()
-        self.wait()
-
     def cancel(self):
-        print("Worker Thread stopped and killed.")
-        yt = YouTube(self.url)
-        d_file = f"C:/users/{self.username}/Downloads/{yt.title}.mp4.part"
+        print("--> Stopping and terminating thread...")
+
         self.terminate()
-        os.remove(d_file)
+        self.finished.emit()
+
+        print("--> Worker Thread stopped and killed. <--")
 
     def callable_hook(self, response):
         if response["status"] == "downloading":
@@ -102,7 +97,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.aboutqt_menu_action.triggered.connect(QApplication.aboutQt)
         self.restart_menu_action.triggered.connect(self.on_restart)
         self.exit_menu_action.triggered.connect(sys.exit)
-        self.play_pause_button.clicked.connect(self.handle_play_stop_button)
         self.cancel_button.clicked.connect(self.cancel_download)
 
         self.worker = Worker()
@@ -123,6 +117,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         icon4 = self.style().standardIcon(pixmap4)
         self.exit_menu_action.setIcon(QIcon(icon4))
 
+        pixmap5 = QStyle.SP_DialogCancelButton
+        icon5 = self.style().standardIcon(pixmap5)
+        self.cancel_button.setIcon(QIcon(icon5))
+
         self.status_bar.showMessage("Bienvenido", 5000)
 
     def download(self):
@@ -137,7 +135,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if not os.path.exists(path):
                 self.download_button.setEnabled(False)
                 self.download_button.setText("Actualmente descargando...")
-                self.play_pause_button.setEnabled(True)
                 self.cancel_button.setEnabled(True)
 
                 # Create a worker object.
@@ -159,19 +156,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         except Exception:
             self.download_button.setEnabled(True)
             self.download_button.setText("Descargar")
-            self.play_pause_button.setEnabled(False)
             self.cancel_button.setEnabled(False)
             QMessageBox.information(
                 self,
                 "Enlace no válido",
                 "El enlace introducido no es válido o no se pudo recopilar.")
-
-    def handle_play_stop_button(self):
-        if self.play_pause_button.isChecked():
-            self.worker.stop()
-        else:
-            self.worker.is_running = True
-            self.download()
 
     def cancel_download(self):
         answer = QMessageBox.question(
@@ -180,6 +169,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "¿Estás seguro de que quieres cancelar la descarga?")
         if answer == QMessageBox.Yes:
             self.worker.cancel()
+            self.status_bar.showMessage("Descarga cancelada", 3000)
+            self.progress_bar.setValue(0)
+            self.speed_label.clear()
+            self.cancel_button.setEnabled(False)
+            self.download_button.setText("Descargar")
+            self.download_button.setEnabled(True)
 
     def update_progress_bar(self, value):
         self.progress_bar.setValue(value)
@@ -194,7 +189,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.status_bar.showMessage("Descarga finalizada", 3000)
         self.progress_bar.setValue(0)
         self.speed_label.clear()
-        self.play_pause_button.setEnabled(False)
         self.cancel_button.setEnabled(False)
         QMessageBox.information(
             self,

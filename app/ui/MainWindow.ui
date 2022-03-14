@@ -85,85 +85,7 @@
        <property name="verticalSpacing">
         <number>0</number>
        </property>
-       <item row="5" column="0" colspan="3">
-        <widget class="QLabel" name="label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Roboto</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Descargador de YouTube</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QToolButton" name="cancel_button">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>32</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Cancelar descarga</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../images.qrc">
-           <normaloff>:/res/images/cancel.png</normaloff>:/res/images/cancel.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>12</width>
-           <height>12</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QToolButton" name="play_pause_button">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>32</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Reanudar/Pausar descarga</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../images.qrc">
-           <normaloff>:/res/images/pause.png</normaloff>
-           <activeon>:/res/images/play.png</activeon>:/res/images/pause.png</iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="3">
+       <item row="7" column="0" colspan="2">
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -179,85 +101,7 @@
          </property>
         </spacer>
        </item>
-       <item row="6" column="0" colspan="3">
-        <widget class="QLineEdit" name="input">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Roboto</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="toolTip">
-          <string>Enlace del vídeo (Enter para actualizar streams)</string>
-         </property>
-         <property name="placeholderText">
-          <string>Escribe el enlace del vídeo</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QProgressBar" name="progress_bar">
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="3">
-        <widget class="QFrame" name="buttons_frame">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="download_button">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="toolTip">
-             <string>Descargar vídeo</string>
-            </property>
-            <property name="text">
-             <string>Descargar</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="11" column="0" colspan="3">
+       <item row="11" column="0" colspan="2">
         <widget class="QFrame" name="spd_label_frame">
          <property name="maximumSize">
           <size>
@@ -327,6 +171,128 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QToolButton" name="cancel_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>Cancelar descarga</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>12</width>
+           <height>12</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QLineEdit" name="input">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Roboto</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Enlace del vídeo (Enter para actualizar streams)</string>
+         </property>
+         <property name="placeholderText">
+          <string>Escribe el enlace del vídeo</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QFrame" name="buttons_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="download_button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Descargar vídeo</string>
+            </property>
+            <property name="text">
+             <string>Descargar</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Roboto</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Descargador de YouTube</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QProgressBar" name="progress_bar">
+         <property name="value">
+          <number>0</number>
+         </property>
         </widget>
        </item>
       </layout>
