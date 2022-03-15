@@ -1,4 +1,3 @@
-from importlib.resources import path
 import sys
 import os
 import subprocess
@@ -20,7 +19,6 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
-    QMenu,
     QMessageBox,
     QStyle
 )
@@ -36,19 +34,22 @@ class Worker(QThread):
     speed = Signal(float)
     is_running = Signal()
 
-    def __init__(self, url=""):
+    def __init__(self, url="", frmat="", quality=""):
         super(Worker, self).__init__()
 
         self.url = url
         self.resuming = False
         self.is_running = True
         self.username = getpass.getuser()
+        self.format = frmat
+        self.quality = quality
 
     def run(self):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         linux_dir = f"/home/{self.username}/Downloads/%(title)s.%(ext)s"
         self.ydl_opts = {
             "progress_hooks": [self.callable_hook],
+            "listformats": True,
             "outtmpl": windows_dir if os.name == "nt" else linux_dir
         }
 
@@ -59,7 +60,7 @@ class Worker(QThread):
         self.d_finished.emit()
 
     def cancel(self):
-        print("--> Stopping and terminating thread...")
+        print("\n--> Stopping and terminating thread...")
 
         self.terminate()
         self.finished.emit()
@@ -120,6 +121,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.status_bar.showMessage("Bienvenido", 5000)
 
     def download(self):
+        """
+
+        Formats Available: 
+
+        # These will be the selectable formats. 
+
+        -->     Video      <--
+
+        MP4 | WEBM | MKV | AVI
+
+        -->     Audio     <--
+
+        MP3 | M4A | WAV | OGG
+
+        """
+
         try:
             self.username = getpass.getuser()
 
@@ -139,7 +156,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cancel_button.setEnabled(True)
 
                 # Create a worker object.
-                self.worker = Worker(url=self.input.text())
+                self.worker = Worker(url=self.input.text(), frmat='MP3')
                 self.worker.progress.connect(self.update_progress_bar)
                 self.worker.progress.connect(self.update_status_bar)
                 self.worker.speed.connect(self.update_speed_lbl)
@@ -193,25 +210,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.progress_bar.setValue(0)
         self.speed_label.clear()
         self.cancel_button.setEnabled(False)
+        self.download_button.setText("Descargar")
+        self.download_button.setEnabled(True)
         QMessageBox.information(
             self,
             "Descarga completada",
             f"Se ha completado la descarga de {self.vid_title}.mp4")
-        self.download_button.setText("Descargar")
-        self.download_button.setEnabled(True)
-
-    """
-    def update_menu_stream(self, url):
-        # Streams menu.
-        menu = QMenu(self)
-        yt = YouTube(url)
-        for stream in yt.streams:
-            menu.addAction(
-                QIcon("../res/images/downloading.png"),
-                f'{stream}',
-                self.download)
-        self.select_strm_button.setMenu(menu)
-    """
 
     def on_restart(self):
         self.close()
