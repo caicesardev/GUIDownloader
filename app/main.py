@@ -2,17 +2,16 @@ from importlib.resources import path
 import sys
 import os
 import subprocess
+import getpass
 import yt_dlp
 
 from ui.ui_MainWindow import Ui_MainWindow
 from about import About
 
-from pytube import YouTube
 from hurry.filesize import size, si
 from PySide6.QtCore import (
     QLibraryInfo,
     QLocale,
-    QObject,
     QTranslator,
     QThread,
     Signal,
@@ -43,11 +42,11 @@ class Worker(QThread):
         self.url = url
         self.resuming = False
         self.is_running = True
-        self.username = os.getlogin()
+        self.username = getpass.getuser()
 
     def run(self):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
-        linux_dir = "/home/downloads/%(title)%s.%(ext)s"
+        linux_dir = f"/home/{self.username}/Downloads/%(title)s.%(ext)s"
         self.ydl_opts = {
             "progress_hooks": [self.callable_hook],
             "outtmpl": windows_dir if os.name == "nt" else linux_dir
@@ -82,9 +81,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__()
 
         self.init_ui()
-
-        # self.input.returnPressed.connect(
-        #    lambda: self.update_menu_stream(self.input.text()))
 
         # Download button.
         self.download_button.clicked.connect(self.download)
@@ -125,12 +121,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def download(self):
         try:
-            self.yt = YouTube(self.input.text())
-            self.username = os.getlogin()
+            self.username = getpass.getuser()
+
+            with yt_dlp.YoutubeDL({}) as ydl:
+                meta = ydl.extract_info(
+                    self.input.text(),
+                    download=False)
+            self.vid_title = meta['title']
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
-            path = f"C:/users/{self.username}/Downloads/{self.yt.title}.mp4"
+            path = f"C:/users/{self.username}/Downloads/{self.vid_title}.mp4"
             # If the file is not yet downloaded.
             if not os.path.exists(path):
                 self.download_button.setEnabled(False)
@@ -153,7 +154,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     "Vídeo ya descargado",
                     "El vídeo ya está descargado.")
 
-        except Exception:
+        except Exception as e:
+            print(f"--> Download Error <-- \n{e}")
             self.download_button.setEnabled(True)
             self.download_button.setText("Descargar")
             self.cancel_button.setEnabled(False)
@@ -180,7 +182,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.progress_bar.setValue(value)
 
     def update_status_bar(self, value):
-        self.status_bar.showMessage(f"Descargando {self.yt.title} || {value}%")
+        self.status_bar.showMessage(
+            f"Descargando {self.vid_title} || {value}%")
 
     def update_speed_lbl(self, value):
         self.speed_label.setText(f"Velocidad: {size(value, system=si)}B/s")
@@ -193,7 +196,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMessageBox.information(
             self,
             "Descarga completada",
-            f"Se ha completado la descarga de {self.yt.title}.mp4")
+            f"Se ha completado la descarga de {self.vid_title}.mp4")
         self.download_button.setText("Descargar")
         self.download_button.setEnabled(True)
 

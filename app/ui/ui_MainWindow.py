@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowmUTVOu.ui'
+## Form generated from reading UI file 'MainWindowQPWODn.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.1
+## Created by: Qt User Interface Compiler version 6.2.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(440, 335)
+        MainWindow.resize(700, 480)
         MainWindow.setMinimumSize(QSize(440, 335))
         font = QFont()
         font.setFamilies([u"Roboto"])
@@ -173,7 +173,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.status_bar)
         self.menuBar = QMenuBar(MainWindow)
         self.menuBar.setObjectName(u"menuBar")
-        self.menuBar.setGeometry(QRect(0, 0, 440, 22))
+        self.menuBar.setGeometry(QRect(0, 0, 700, 21))
         self.menuBar.setStyleSheet(u"b")
         self.menuAplicaci_n = QMenu(self.menuBar)
         self.menuAplicaci_n.setObjectName(u"menuAplicaci_n")
@@ -192,6 +192,7 @@ class Ui_MainWindow(object):
         self.menuLenguaje.addAction(self.english_menu_action)
 
         self.retranslateUi(MainWindow)
+        self.input.returnPressed.connect(self.download_button.animateClick)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -231,7 +232,7 @@ class Ui_MainWindow(object):
         self.cancel_button.setToolTip(QCoreApplication.translate("MainWindow", u"Cancelar descarga", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
-        self.input.setToolTip(QCoreApplication.translate("MainWindow", u"Enlace del v\u00eddeo (Enter para actualizar streams)", None))
+        self.input.setToolTip(QCoreApplication.translate("MainWindow", u"Enlace del v\u00eddeo", None))
 #endif // QT_CONFIG(tooltip)
         self.input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Escribe el enlace del v\u00eddeo", None))
 #if QT_CONFIG(tooltip)
@@ -239,6 +240,9 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.download_button.setText(QCoreApplication.translate("MainWindow", u"Descargar", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Descargador de YouTube", None))
+#if QT_CONFIG(tooltip)
+        self.progress_bar.setToolTip(QCoreApplication.translate("MainWindow", u"Progreso", None))
+#endif // QT_CONFIG(tooltip)
         self.menuAplicaci_n.setTitle(QCoreApplication.translate("MainWindow", u"Aplicaci\u00f3n", None))
         self.menuLenguaje.setTitle(QCoreApplication.translate("MainWindow", u"Lenguaje", None))
     # retranslateUi
