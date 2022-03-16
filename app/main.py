@@ -127,15 +127,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         icon5 = self.style().standardIcon(pixmap5)
         self.cancel_button.setIcon(QIcon(icon5))
 
+        # On video radio button clicked.
+        self.vid_radio_btn.toggled.connect(self.on_vid_radio_toggled)
+        # On audio radio button clicked.
+        self.audio_radio_btn.toggled.connect(self.on_audio_radio_toggled)
+
         self.status_bar.showMessage("Bienvenido", 5000)
 
     def get_settings(self):
         self.w_attrib = QSettings("GUIDownloader", "WindowAttributes")
+        self.preferences = QSettings("GUIDownloader", "Preferences")
 
     def set_settings(self):
         # Initial window size/pos last saved. Use default values for first time.
         self.resize(self.w_attrib.value("size", QSize(270, 225)))
         self.move(self.w_attrib.value("pos", QPoint(50, 50)))
+
+        # User's last downlaod preference.
+        if self.preferences.value("DownloadVideo", "true") == "true":
+            self.vid_radio_btn.setChecked(True)
+            self.audio_tab.setEnabled(False)
+        if self.preferences.value("DownloadAudio", "false") == "true":
+            self.audio_radio_btn.setChecked(True)
+            self.audio_tab.setEnabled(True)
+
+        # Set user's last input default to 1.
+        self.vf_combo_box.setCurrentIndex(
+            self.preferences.value("VideoFormat", 0))
+        self.vq_combo_box.setCurrentIndex(
+            self.preferences.value("VideoQuality", 0))
+        self.af_combo_box.setCurrentIndex(
+            self.preferences.value("AudioFormat", 0))
+        self.aq_combo_box.setCurrentIndex(
+            self.preferences.value("AudioQuality", 0))
 
     def download(self):
         """
@@ -212,6 +236,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.download_button.setText("Descargar")
             self.download_button.setEnabled(True)
 
+    def on_vid_radio_toggled(self, enabled):
+        if enabled:
+            self.tab_widget.setCurrentIndex(0)
+            self.video_tab.setEnabled(True)
+            self.audio_tab.setEnabled(False)
+
+    def on_audio_radio_toggled(self, enabled):
+        if enabled:
+            self.tab_widget.setCurrentIndex(1)
+            self.audio_tab.setEnabled(True)
+            self.video_tab.setEnabled(False)
+
     def update_progress_bar(self, value):
         self.progress_bar.setValue(value)
 
@@ -239,10 +275,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         subprocess.Popen([sys.executable, "./main.py"])
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    # Remember window postion and size on exit.
+    # Event that is called when trying to exit the program.
     def closeEvent(self, event) -> None:
+        # Remember window postion and size on exit.
         self.w_attrib.setValue("size", self.size())
         self.w_attrib.setValue("pos", self.pos())
+        # Remember user's last input.
+        self.preferences.setValue(
+            "DownloadVideo", self.vid_radio_btn.isChecked())
+        self.preferences.setValue(
+            "DownloadAudio", self.audio_radio_btn.isChecked())
+        self.preferences.setValue(
+            "VideoFormat", self.vf_combo_box.currentIndex())
+        self.preferences.setValue(
+            "VideoQuality", self.vq_combo_box.currentIndex())
+        self.preferences.setValue(
+            "AudioFormat", self.af_combo_box.currentIndex())
+        self.preferences.setValue(
+            "AudioQuality", self.aq_combo_box.currentIndex())
 
 
 def main():
