@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowJQzUwE.ui'
+## Form generated from reading UI file 'MainWindowkxKmKQ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -183,6 +183,7 @@ class Ui_MainWindow(object):
         self.aq_combo_box.addItem("")
         self.aq_combo_box.addItem("")
         self.aq_combo_box.addItem("")
+        self.aq_combo_box.addItem("")
         self.aq_combo_box.setObjectName(u"aq_combo_box")
 
         self.horizontalLayout_4.addWidget(self.aq_combo_box)
@@ -250,7 +251,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.input.returnPressed.connect(self.download_button.animateClick)
 
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -308,8 +309,9 @@ class Ui_MainWindow(object):
         self.af_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"OGG", None))
 
         self.aq_combo_box.setItemText(0, QCoreApplication.translate("MainWindow", u"360K", None))
-        self.aq_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"144k", None))
-        self.aq_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"96K", None))
+        self.aq_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"192K", None))
+        self.aq_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"144k", None))
+        self.aq_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"96K", None))
 
         self.tab_widget.setTabText(self.tab_widget.indexOf(self.audio_tab), QCoreApplication.translate("MainWindow", u"Formato de audio", None))
 #if QT_CONFIG(tooltip)

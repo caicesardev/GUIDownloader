@@ -266,7 +266,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="video_tab">
           <attribute name="title">
@@ -362,6 +362,11 @@
              <item>
               <property name="text">
                <string>360K</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>192K</string>
               </property>
              </item>
              <item>

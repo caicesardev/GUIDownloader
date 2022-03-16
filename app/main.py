@@ -37,24 +37,40 @@ class Worker(QThread):
     speed = Signal(float)
     is_running = Signal()
 
-    def __init__(self, url="", frmat="", quality=""):
+    def __init__(self, url="", frmat="", quality="", audio_only=""):
         super(Worker, self).__init__()
 
         self.url = url
-        self.resuming = False
+        self.format = frmat.lower()
+        self.quality = quality.lower()
+        self.audio_only = audio_only
         self.is_running = True
         self.username = getpass.getuser()
-        self.format = frmat
-        self.quality = quality
 
     def run(self):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
-        self.ydl_opts = {
-            "progress_hooks": [self.callable_hook],
-            "outtmpl": windows_dir if os.name == "nt" else linux_dir
-        }
-
+        ffmpeg = "../ffmpeg/bin/ffmpeg.exe"
+        print(self.format)
+        # Audio only.
+        if self.audio_only:
+            self.ydl_opts = {
+                "format": "bestaudio/best",
+                "ffmpeg_location": ffmpeg,
+                "postprocessors": [{
+                    "key": "FFmpegExtractAudio",
+                    "preferredcodec": self.format,
+                    "preferredquality": self.quality,
+                }],
+                "progress_hooks": [self.callable_hook],
+                "outtmpl": windows_dir if os.name == "nt" else linux_dir
+            }
+        # Video
+        else:
+            self.ydl_opts = {
+                "progress_hooks": [self.callable_hook],
+                "outtmpl": windows_dir if os.name == "nt" else linux_dir
+            }
         with yt_dlp.YoutubeDL(self.ydl_opts) as self.ytdl:
             self.ytdl.download([self.url])
 
@@ -187,6 +203,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
+            if self.vid_radio_btn.isChecked():
+                frmat = self.vf_combo_box.currentText()
+                quality = self.vq_combo_box.currentText()
+                audio_only = False
+
+            if self.audio_radio_btn.isChecked():
+                frmat = self.af_combo_box.currentText()
+                quality = self.aq_combo_box.currentText()
+                audio_only = True
+
+            print(f"\nFormat: {frmat} \nQuality: {quality}\n")
+
             win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
             lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
             # If the file is not yet downloaded.
@@ -196,7 +224,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cancel_button.setEnabled(True)
 
                 # Create a worker object.
-                self.worker = Worker(url=self.input.text(), frmat='MP3')
+                self.worker = Worker(url=self.input.text(),
+                                     frmat=frmat,
+                                     quality=quality,
+                                     audio_only=audio_only)
                 self.worker.progress.connect(self.update_progress_bar)
                 self.worker.progress.connect(self.update_status_bar)
                 self.worker.speed.connect(self.update_speed_lbl)
