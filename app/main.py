@@ -9,6 +9,9 @@ from about import About
 
 from hurry.filesize import size, si
 from PySide6.QtCore import (
+    QSettings,
+    QSize,
+    QPoint,
     QLibraryInfo,
     QLocale,
     QTranslator,
@@ -46,7 +49,7 @@ class Worker(QThread):
 
     def run(self):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
-        linux_dir = f"/home/{self.username}/Downloads/%(title)s.%(ext)s"
+        linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         self.ydl_opts = {
             "progress_hooks": [self.callable_hook],
             "listformats": True,
@@ -83,6 +86,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.init_ui()
 
+        # Get app settings.
+        self.get_settings()
+
+        # Set app settings.
+        self.set_settings()
+
         # Download button.
         self.download_button.clicked.connect(self.download)
 
@@ -93,7 +102,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.about_menu_action.triggered.connect(About)
         self.aboutqt_menu_action.triggered.connect(QApplication.aboutQt)
         self.restart_menu_action.triggered.connect(self.on_restart)
-        self.exit_menu_action.triggered.connect(sys.exit)
+        self.exit_menu_action.triggered.connect(self.close)
         self.cancel_button.clicked.connect(self.cancel_download)
 
         self.worker = Worker()
@@ -119,6 +128,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cancel_button.setIcon(QIcon(icon5))
 
         self.status_bar.showMessage("Bienvenido", 5000)
+
+    def get_settings(self):
+        self.w_attrib = QSettings("GUIDownloader", "WindowAttributes")
+
+    def set_settings(self):
+        # Initial window size/pos last saved. Use default values for first time.
+        self.resize(self.w_attrib.value("size", QSize(270, 225)))
+        self.move(self.w_attrib.value("pos", QPoint(50, 50)))
 
     def download(self):
         """
@@ -221,6 +238,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.close()
         subprocess.Popen([sys.executable, "./main.py"])
         os.system('cls' if os.name == 'nt' else 'clear')
+
+    # Remember window postion and size on exit.
+    def closeEvent(self, event) -> None:
+        self.w_attrib.setValue("size", self.size())
+        self.w_attrib.setValue("pos", self.pos())
 
 
 def main():

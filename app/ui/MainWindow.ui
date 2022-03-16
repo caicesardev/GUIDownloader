@@ -266,7 +266,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="video_tab">
           <attribute name="title">
@@ -274,7 +274,7 @@
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QComboBox" name="f_combo_box_2">
+            <widget class="QComboBox" name="vf_combo_box">
              <item>
               <property name="text">
                <string>MP4</string>
@@ -298,7 +298,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="q_combo_box_2">
+            <widget class="QComboBox" name="vq_combo_box">
              <item>
               <property name="text">
                <string>1080p</string>
@@ -334,7 +334,7 @@
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QComboBox" name="f_combo_box_3">
+            <widget class="QComboBox" name="af_combo_box">
              <item>
               <property name="text">
                <string>MP3</string>
@@ -358,7 +358,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="q_combo_box_3">
+            <widget class="QComboBox" name="aq_combo_box">
              <item>
               <property name="text">
                <string>360K</string>
@@ -400,7 +400,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="vid_radio_btn">
             <property name="toolTip">
              <string>Descargar vídeo</string>
             </property>
@@ -413,7 +413,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="audio_radio_btn">
             <property name="toolTip">
              <string>Descargar solo audio</string>
             </property>
