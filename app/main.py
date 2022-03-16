@@ -52,12 +52,10 @@ class Worker(QThread):
         linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         self.ydl_opts = {
             "progress_hooks": [self.callable_hook],
-            "listformats": True,
             "outtmpl": windows_dir if os.name == "nt" else linux_dir
         }
 
         with yt_dlp.YoutubeDL(self.ydl_opts) as self.ytdl:
-            print("\n--> is_running from with:", self.is_running)
             self.ytdl.download([self.url])
 
         self.d_finished.emit()
@@ -189,9 +187,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
-            path = f"C:/users/{self.username}/Downloads/{self.vid_title}.mp4"
+            win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
+            lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
             # If the file is not yet downloaded.
-            if not os.path.exists(path):
+            if not os.path.exists(win_path) or os.path.exists(lin_path):
                 self.download_button.setEnabled(False)
                 self.download_button.setText("Actualmente descargando...")
                 self.cancel_button.setEnabled(True)
