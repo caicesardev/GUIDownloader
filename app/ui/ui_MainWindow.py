@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowtOIqSG.ui'
+## Form generated from reading UI file 'MainWindownNjNlE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -165,8 +165,6 @@ class Ui_MainWindow(object):
         self.progress_frame = QFrame(self.container_frame)
         self.progress_frame.setObjectName(u"progress_frame")
         self.progress_frame.setMaximumSize(QSize(16777215, 64))
-        self.progress_frame.setFrameShape(QFrame.StyledPanel)
-        self.progress_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_5 = QHBoxLayout(self.progress_frame)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, -1, 0, -1)
