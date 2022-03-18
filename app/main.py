@@ -217,15 +217,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 quality = self.vq_combo_box.currentText()
                 audio_only = False
 
+                win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.vf_combo_box.currentText().lower()}"
+                lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.vf_combo_box.currentText().lower()}"
+
             if self.audio_radio_btn.isChecked():
                 frmat = self.af_combo_box.currentText()
                 quality = self.aq_combo_box.currentText()
                 audio_only = True
 
+                win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.af_combo_box.currentText().lower()}"
+                lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.af_combo_box.currentText().lower()}"
+
             print(f"\nFormat: {frmat} \nQuality: {quality}\n")
 
-            win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
-            lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.mp4"
             # If the file is not yet downloaded.
             if not os.path.exists(win_path) or os.path.exists(lin_path):
                 self.download_button.setEnabled(False)
@@ -304,10 +308,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cancel_button.setEnabled(False)
         self.download_button.setText("Descargar")
         self.download_button.setEnabled(True)
+        if self.vid_radio_btn.isChecked():
+            frmat = self.vf_combo_box.currentText().lower()
+        if self.audio_radio_btn.isChecked():
+            frmat = self.af_combo_box.currentText().lower()
         QMessageBox.information(
             self,
             "Descarga completada",
-            f"Se ha completado la descarga de {self.vid_title}.mp4")
+            f"Se ha completado la descarga de {self.vid_title}.{frmat}")
 
     def on_restart(self):
         self.close()
