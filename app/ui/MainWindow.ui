@@ -302,7 +302,7 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QFrame#container_frame{background: whitesmoke; border-radius: 10px;}</string>
+             <string notr="true">QFrame#container_frame{background: whitesmoke; border: 1px solid #c2c2c2; border-radius: 10px;}</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>

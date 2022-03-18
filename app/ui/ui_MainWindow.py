@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowGlZTeh.ui'
+## Form generated from reading UI file 'MainWindowtOIqSG.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -134,7 +134,7 @@ class Ui_MainWindow(object):
         self.container_frame.setObjectName(u"container_frame")
         self.container_frame.setMinimumSize(QSize(440, 0))
         self.container_frame.setMaximumSize(QSize(960, 300))
-        self.container_frame.setStyleSheet(u"QFrame#container_frame{background: whitesmoke; border-radius: 10px;}")
+        self.container_frame.setStyleSheet(u"QFrame#container_frame{background: whitesmoke; border: 1px solid #c2c2c2; border-radius: 10px;}")
         self.container_frame.setFrameShape(QFrame.StyledPanel)
         self.container_frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.container_frame)
