@@ -341,8 +341,6 @@ def main():
                     QLibraryInfo.location(QLibraryInfo.TranslationsPath))
     app.installTranslator(translator)
 
-    app.setStyle("Fusion")
-
     gui = MainWindow()
     gui.show()
 
