@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>480</height>
+    <height>482</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>440</width>
-    <height>335</height>
+    <width>0</width>
+    <height>440</height>
    </size>
   </property>
   <property name="font">
@@ -29,133 +29,109 @@
    <iconset resource="../images.qrc">
     <normaloff>:/res/images/downloading.png</normaloff>:/res/images/downloading.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow#MainWindow{background: white;}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="2" rowspan="2">
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0" rowspan="2">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="3" column="1">
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="1" rowspan="2">
-     <widget class="QFrame" name="centralframe">
-      <property name="minimumSize">
-       <size>
-        <width>410</width>
-        <height>300</height>
-       </size>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="9" column="0" colspan="2">
-        <widget class="QFrame" name="buttons_frame">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QFrame" name="central_frame">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="header_frame">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>40</height>
+           <height>80</height>
           </size>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="font">
+          <font>
+           <family>Roboto Mono</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame#header_frame{background: #006064;}</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
+           <number>18</number>
           </property>
           <item>
-           <widget class="QPushButton" name="download_button">
-            <property name="minimumSize">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
              <size>
-              <width>0</width>
-              <height>30</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
+            <property name="pixmap">
+             <pixmap resource="../images.qrc">:/res/images/downloading.png</pixmap>
             </property>
-            <property name="toolTip">
-             <string>Descargar vídeo</string>
-            </property>
-            <property name="text">
-             <string>Descargar</string>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="13" column="0" colspan="2">
-        <widget class="QFrame" name="spd_label_frame">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>35</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="title">
+            <property name="font">
+             <font>
+              <family>Roboto</family>
+             </font>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ffffff;&quot;&gt;GUIDownloader&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
@@ -170,275 +146,534 @@
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="speed_label">
+           <widget class="QPushButton" name="about_menu_action">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>50</width>
-              <height>20</height>
+              <height>16777215</height>
              </size>
             </property>
-            <property name="text">
-             <string/>
+            <property name="statusTip">
+             <string>Acerca de </string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="aboutqt_menu_action">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="statusTip">
+             <string>Acerca de Qt</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="restart_menu_action">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="statusTip">
+             <string>Reiniciar aplicación</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="exit_menu_action">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="statusTip">
+             <string>Salir de la aplicación</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLineEdit" name="input">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>25</height>
-          </size>
-         </property>
+       <item>
+        <widget class="QFrame" name="mid_frame">
          <property name="font">
           <font>
            <family>Roboto</family>
            <pointsize>10</pointsize>
           </font>
          </property>
-         <property name="toolTip">
-          <string>Enlace del vídeo</string>
-         </property>
-         <property name="placeholderText">
-          <string>Escribe el enlace del vídeo</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QLabel" name="label">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Roboto</family>
-           <pointsize>11</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Descargador de YouTube</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QToolButton" name="cancel_button">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>32</width>
-           <height>26</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>Cancelar descarga</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>12</width>
-           <height>12</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0" colspan="2">
-        <widget class="QTabWidget" name="tab_widget">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>93</height>
-          </size>
-         </property>
-         <property name="currentIndex">
-          <number>1</number>
-         </property>
-         <widget class="QWidget" name="video_tab">
-          <attribute name="title">
-           <string>Formato de vídeo</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QComboBox" name="vf_combo_box">
-             <item>
-              <property name="text">
-               <string>MP4</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>MKV</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>AVI</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>WEBM</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="vq_combo_box">
-             <item>
-              <property name="text">
-               <string>1080p</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>720p</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>480p</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>360p</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>144p</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="audio_tab">
-          <attribute name="title">
-           <string>Formato de audio</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QComboBox" name="af_combo_box">
-             <item>
-              <property name="text">
-               <string>MP3</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>M4A</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>WAV</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>OGG</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="aq_combo_box">
-             <item>
-              <property name="text">
-               <string>360K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>192K</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>144k</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>96K</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QProgressBar" name="progress_bar">
-         <property name="toolTip">
-          <string>Progreso</string>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0" colspan="2">
-        <widget class="QFrame" name="options_frame">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>35</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
+          <property name="leftMargin">
+           <number>50</number>
+          </property>
+          <property name="topMargin">
+           <number>30</number>
+          </property>
+          <property name="rightMargin">
+           <number>50</number>
+          </property>
+          <property name="bottomMargin">
+           <number>30</number>
+          </property>
           <item>
-           <widget class="QRadioButton" name="vid_radio_btn">
-            <property name="toolTip">
-             <string>Descargar vídeo</string>
-            </property>
-            <property name="text">
-             <string>Vídeo</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="audio_radio_btn">
-            <property name="toolTip">
-             <string>Descargar solo audio</string>
-            </property>
-            <property name="text">
-             <string>Audio</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
+           <widget class="QFrame" name="container_frame">
+            <property name="minimumSize">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>440</width>
+              <height>0</height>
              </size>
             </property>
-           </spacer>
+            <property name="maximumSize">
+             <size>
+              <width>960</width>
+              <height>300</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QFrame#container_frame{background: whitesmoke; border-radius: 10px;}</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>15</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
+             </property>
+             <property name="bottomMargin">
+              <number>15</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Roboto</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Descargador de YouTube</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="input">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Roboto</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Enlace del vídeo</string>
+               </property>
+               <property name="statusTip">
+                <string>Escribe el enlace del vídeo</string>
+               </property>
+               <property name="placeholderText">
+                <string>Escribe el enlace del vídeo</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="progress_frame">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>64</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QProgressBar" name="progress_bar">
+                  <property name="toolTip">
+                   <string>Progreso</string>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="cancel_button">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>32</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="toolTip">
+                   <string>Cancelar descarga</string>
+                  </property>
+                  <property name="statusTip">
+                   <string>Cancelar la descarga</string>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>12</width>
+                    <height>12</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="download_button">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Descargar vídeo</string>
+               </property>
+               <property name="statusTip">
+                <string>Descargar vídeo</string>
+               </property>
+               <property name="text">
+                <string>Descargar</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTabWidget" name="tab_widget">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>93</height>
+                </size>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="video_tab">
+                <attribute name="title">
+                 <string>Formato de vídeo</string>
+                </attribute>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QComboBox" name="vf_combo_box">
+                   <item>
+                    <property name="text">
+                     <string>MP4</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MKV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AVI</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WEBM</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="vq_combo_box">
+                   <item>
+                    <property name="text">
+                     <string>1080p</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>720p</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>480p</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>360p</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>144p</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="audio_tab">
+                <attribute name="title">
+                 <string>Formato de audio</string>
+                </attribute>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QComboBox" name="af_combo_box">
+                   <item>
+                    <property name="text">
+                     <string>MP3</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>M4A</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>WAV</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>OGG</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="aq_combo_box">
+                   <item>
+                    <property name="text">
+                     <string>360K</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>192K</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>144k</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>96K</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="options_frame">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QRadioButton" name="vid_radio_btn">
+                  <property name="toolTip">
+                   <string>Descargar vídeo</string>
+                  </property>
+                  <property name="statusTip">
+                   <string>Descargar en vídeo</string>
+                  </property>
+                  <property name="text">
+                   <string>Vídeo</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="audio_radio_btn">
+                  <property name="toolTip">
+                   <string>Descargar solo audio</string>
+                  </property>
+                  <property name="statusTip">
+                   <string>Descargar solo audio</string>
+                  </property>
+                  <property name="text">
+                   <string>Audio</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="speed_label">
+                  <property name="font">
+                   <font>
+                    <family>Roboto</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -448,106 +683,20 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="status_bar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>700</width>
-     <height>22</height>
-    </rect>
+  <widget class="QStatusBar" name="status_bar">
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">b</string>
+    <string notr="true">QStatusBar{background: whitesmoke;}</string>
    </property>
-   <widget class="QMenu" name="menuAplicaci_n">
-    <property name="title">
-     <string>Aplicación</string>
-    </property>
-    <addaction name="about_menu_action"/>
-    <addaction name="aboutqt_menu_action"/>
-    <addaction name="restart_menu_action"/>
-    <addaction name="exit_menu_action"/>
-   </widget>
-   <widget class="QMenu" name="menuLenguaje">
-    <property name="title">
-     <string>Lenguaje</string>
-    </property>
-    <addaction name="spanish_menu_action"/>
-    <addaction name="catalan_menu_action"/>
-    <addaction name="english_menu_action"/>
-   </widget>
-   <addaction name="menuAplicaci_n"/>
-   <addaction name="menuLenguaje"/>
   </widget>
-  <action name="about_menu_action">
-   <property name="text">
-    <string>Acerca de</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+H</string>
-   </property>
-  </action>
-  <action name="restart_menu_action">
-   <property name="text">
-    <string>Reiniciar</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+R</string>
-   </property>
-  </action>
-  <action name="exit_menu_action">
-   <property name="text">
-    <string>Salir</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+W</string>
-   </property>
-  </action>
-  <action name="spanish_menu_action">
-   <property name="text">
-    <string>Español</string>
-   </property>
-  </action>
-  <action name="catalan_menu_action">
-   <property name="text">
-    <string>Català</string>
-   </property>
-  </action>
-  <action name="english_menu_action">
-   <property name="text">
-    <string>English</string>
-   </property>
-  </action>
-  <action name="aboutqt_menu_action">
-   <property name="text">
-    <string>Acerca de Qt</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+H</string>
-   </property>
-  </action>
  </widget>
  <resources>
   <include location="../images.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>input</sender>
-   <signal>returnPressed()</signal>
-   <receiver>download_button</receiver>
-   <slot>animateClick()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>303</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>340</x>
-     <y>225</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

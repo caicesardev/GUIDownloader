@@ -23,7 +23,8 @@ from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
     QMessageBox,
-    QStyle
+    QStyle,
+    QGraphicsDropShadowEffect,
 )
 
 __version__ = "1.0.0"
@@ -50,7 +51,7 @@ class Worker(QThread):
     def run(self):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
-        ffmpeg = "../ffmpeg/bin/ffmpeg.exe"
+        ffmpeg = "./ffmpeg/bin/ffmpeg.exe"
         print(self.format)
         # Audio only.
         if self.audio_only:
@@ -112,11 +113,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def init_ui(self):
         self.setupUi(self)
 
+        # Shadows
+        self.shadow = QGraphicsDropShadowEffect(blurRadius=35)
+        self.header_frame.setGraphicsEffect(self.shadow)
+        self.shadow2 = QGraphicsDropShadowEffect(
+            blurRadius=40,
+            color="#cfcfcf")
+        self.container_frame.setGraphicsEffect(self.shadow2)
+
         # Menu buttons
-        self.about_menu_action.triggered.connect(About)
-        self.aboutqt_menu_action.triggered.connect(QApplication.aboutQt)
-        self.restart_menu_action.triggered.connect(self.on_restart)
-        self.exit_menu_action.triggered.connect(self.close)
+        self.about_menu_action.clicked.connect(About)
+        self.aboutqt_menu_action.clicked.connect(QApplication.aboutQt)
+        self.restart_menu_action.clicked.connect(self.on_restart)
+        self.exit_menu_action.clicked.connect(self.close)
         self.cancel_button.clicked.connect(self.cancel_download)
 
         self.worker = Worker()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowGlZTeh.ui'
+## Form generated from reading UI file 'MaterialMainWindowWbfrKE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -132,7 +132,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setContentsMargins(50, 30, 50, 30)
         self.container_frame = QFrame(self.mid_frame)
         self.container_frame.setObjectName(u"container_frame")
-        self.container_frame.setMinimumSize(QSize(440, 0))
+        self.container_frame.setMinimumSize(QSize(400, 0))
         self.container_frame.setMaximumSize(QSize(960, 300))
         self.container_frame.setStyleSheet(u"QFrame#container_frame{background: whitesmoke; border-radius: 10px;}")
         self.container_frame.setFrameShape(QFrame.StyledPanel)
@@ -299,14 +299,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"GUIDownloader", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.title.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700; color:#ffffff;\">GUIDownloader</span></p></body></html>", None))
 #if QT_CONFIG(statustip)
         self.about_menu_action.setStatusTip(QCoreApplication.translate("MainWindow", u"Acerca de ", None))
@@ -371,7 +371,7 @@ class Ui_MainWindow(object):
         self.vid_radio_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar v\u00eddeo", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.vid_radio_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"Descargar en v\u00eddeo", None))
+        self.vid_radio_btn.setStatusTip(QCoreApplication.translate("MainWindow", u"V\u00eddeo", None))
 #endif // QT_CONFIG(statustip)
         self.vid_radio_btn.setText(QCoreApplication.translate("MainWindow", u"V\u00eddeo", None))
 #if QT_CONFIG(tooltip)

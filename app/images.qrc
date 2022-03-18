@@ -1,8 +1,5 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
+<RCC>
+  <qresource>
     <file>../res/images/downloading.png</file>
-    <file>../res/images/play.png</file>
-    <file>../res/images/pause.png</file>
-    <file>../res/images/cancel.png</file>
-</qresource>
+  </qresource>
 </RCC>
