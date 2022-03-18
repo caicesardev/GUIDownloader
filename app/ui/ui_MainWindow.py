@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindownNjNlE.ui'
+## Form generated from reading UI file 'MainWindowYzXKMe.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.2.1
 ##
@@ -192,6 +192,10 @@ class Ui_MainWindow(object):
         self.download_button.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.verticalLayout_3.addWidget(self.download_button)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 9, QSizePolicy.Minimum, QSizePolicy.Fixed)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_3)
 
         self.tab_widget = QTabWidget(self.container_frame)
         self.tab_widget.setObjectName(u"tab_widget")
