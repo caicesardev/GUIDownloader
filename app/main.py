@@ -69,6 +69,11 @@ class Worker(QThread):
         # Video
         else:
             self.ydl_opts = {
+                "ffmpeg_location": ffmpeg,
+                "postprocessors": [{
+                    "key": "FFmpegVideoConvertor",
+                    "preferedformat": self.format,
+                }],
                 "progress_hooks": [self.callable_hook],
                 "outtmpl": windows_dir if os.name == "nt" else linux_dir
             }
@@ -83,7 +88,7 @@ class Worker(QThread):
         self.terminate()
         self.finished.emit()
 
-        print("--> Worker Thread stopped and killed. <--")
+        print("--> Worker Thread stopped and killed <--")
 
     def callable_hook(self, response):
         if response["status"] == "downloading":
