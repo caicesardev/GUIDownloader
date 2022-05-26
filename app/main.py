@@ -52,7 +52,6 @@ class Worker(QThread):
         windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         ffmpeg = "./ffmpeg/bin/ffmpeg.exe"
-        print(self.format)
         # Audio only.
         if self.audio_only:
             self.ydl_opts = {
