@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowYzXKMe.ui'
+## Form generated from reading UI file 'MainWindowwjTyfB.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.1
+## Created by: Qt User Interface Compiler version 6.3.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -118,6 +118,15 @@ class Ui_MainWindow(object):
         self.exit_menu_action.setFlat(True)
 
         self.horizontalLayout.addWidget(self.exit_menu_action)
+
+        self.settings_btn = QPushButton(self.header_frame)
+        self.settings_btn.setObjectName(u"settings_btn")
+        self.settings_btn.setMinimumSize(QSize(0, 40))
+        self.settings_btn.setMaximumSize(QSize(50, 16777215))
+        self.settings_btn.setIconSize(QSize(24, 24))
+        self.settings_btn.setFlat(True)
+
+        self.horizontalLayout.addWidget(self.settings_btn)
 
 
         self.verticalLayout.addWidget(self.header_frame)

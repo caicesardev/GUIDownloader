@@ -6,6 +6,7 @@ import yt_dlp
 
 from ui.ui_MainWindow import Ui_MainWindow
 from about import About
+from settings import Settings
 
 from hurry.filesize import size, si
 from PySide6.QtCore import (
@@ -38,19 +39,18 @@ class Worker(QThread):
     speed = Signal(float)
     is_running = Signal()
 
-    def __init__(self, url="", frmat="", quality="", audio_only=""):
+    def __init__(self, url="", frmat="", quality="", audio_only="", download_path=""):
         super(Worker, self).__init__()
 
         self.url = url
         self.format = frmat.lower()
         self.quality = quality.lower()
         self.audio_only = audio_only
+        self.download_path = download_path
         self.is_running = True
         self.username = getpass.getuser()
 
     def run(self):
-        windows_dir = f"C:/users/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
-        linux_dir = f"/home/{self.username}/Downloads/GUIDownloader/%(title)s.%(ext)s"
         ffmpeg = "./ffmpeg/bin/ffmpeg.exe"
         # Audio only.
         if self.audio_only:
@@ -63,7 +63,7 @@ class Worker(QThread):
                     "preferredquality": self.quality,
                 }],
                 "progress_hooks": [self.callable_hook],
-                "outtmpl": windows_dir if os.name == "nt" else linux_dir
+                "outtmpl": f"{self.download_path}/%(title)s.%(ext)s"
             }
         # Video
         else:
@@ -74,7 +74,7 @@ class Worker(QThread):
                     "preferedformat": self.format,
                 }],
                 "progress_hooks": [self.callable_hook],
-                "outtmpl": windows_dir if os.name == "nt" else linux_dir
+                "outtmpl": f"{self.download_path}/%(title)s.%(ext)s"
             }
         with yt_dlp.YoutubeDL(self.ydl_opts) as self.ytdl:
             self.ytdl.download([self.url])
@@ -111,6 +111,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Set app settings.
         self.set_settings()
 
+        from pathlib import Path
+        self.download_path = self.preferences.value("download_path", str(Path.home() / "Downloads"))
+
         # Download button.
         self.download_button.clicked.connect(self.download)
 
@@ -131,6 +134,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.restart_menu_action.clicked.connect(self.on_restart)
         self.exit_menu_action.clicked.connect(self.close)
         self.cancel_button.clicked.connect(self.cancel_download)
+        self.settings_btn.clicked.connect(lambda: Settings(self))
 
         self.worker = Worker()
 
@@ -153,6 +157,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pixmap5 = QStyle.SP_DialogCancelButton
         icon5 = self.style().standardIcon(pixmap5)
         self.cancel_button.setIcon(QIcon(icon5))
+
+        pixmap6 = QStyle.SP_DialogOpenButton
+        icon6 = self.style().standardIcon(pixmap6)
+        self.settings_btn.setIcon(QIcon(icon6))
 
         # On video radio button clicked.
         self.vid_radio_btn.toggled.connect(self.on_vid_radio_toggled)
@@ -216,26 +224,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # https://www.youtube.com/watch?v=dP15zlyra3c <- For testings
 
+            video_path = f"{self.download_path}/{self.vid_title}.{self.vf_combo_box.currentText().lower()}"
+            audio_path = f"{self.download_path}/{self.vid_title}.{self.af_combo_box.currentText().lower()}"
+
             if self.vid_radio_btn.isChecked():
                 frmat = self.vf_combo_box.currentText()
                 quality = self.vq_combo_box.currentText()
                 audio_only = False
-
-                win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.vf_combo_box.currentText().lower()}"
-                lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.vf_combo_box.currentText().lower()}"
 
             if self.audio_radio_btn.isChecked():
                 frmat = self.af_combo_box.currentText()
                 quality = self.aq_combo_box.currentText()
                 audio_only = True
 
-                win_path = f"C:/users/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.af_combo_box.currentText().lower()}"
-                lin_path = f"/home/{self.username}/Downloads/GUIDownloader/{self.vid_title}.{self.af_combo_box.currentText().lower()}"
-
             print(f"\nFormat: {frmat} \nQuality: {quality}\n")
 
             # If the file is not yet downloaded.
-            if not os.path.exists(win_path) or os.path.exists(lin_path):
+            if not video_path or audio_path:
                 self.download_button.setEnabled(False)
                 self.download_button.setText("Actualmente descargando...")
                 self.cancel_button.setEnabled(True)
@@ -244,7 +249,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.worker = Worker(url=self.input.text(),
                                      frmat=frmat,
                                      quality=quality,
-                                     audio_only=audio_only)
+                                     audio_only=audio_only,
+                                     download_path=self.download_path)
                 self.worker.progress.connect(self.update_progress_bar)
                 self.worker.progress.connect(self.update_status_bar)
                 self.worker.speed.connect(self.update_speed_lbl)
