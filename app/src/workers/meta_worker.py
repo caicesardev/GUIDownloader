@@ -1,7 +1,11 @@
-import yt_dlp  # type: ignore
+import yt_dlp
+
 from typing import Any, List, Dict
-from VideoMetadata import VideoMetadata
-from PySide6.QtCore import QThread, Signal
+from src.models.video_metadata import VideoMetadata
+from PySide6.QtCore import (
+    Signal,
+    QThread,
+)
 
 
 class MetaWorker(QThread):
@@ -73,8 +77,8 @@ class MetaWorker(QThread):
                 audio_formats.add(ext)
 
         return {
-            "video_formats": sorted(list(video_formats)),
-            "audio_formats": sorted(list(audio_formats)),
+            "video_formats": sorted(video_formats),
+            "audio_formats": sorted(audio_formats),
         }
 
     def extract_metadata(self, meta_dict: Dict[str, Any]) -> VideoMetadata:
