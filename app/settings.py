@@ -1,6 +1,6 @@
 import sys
 
-from ui.ui_Settings import Ui_Settings
+from ui.Settings_ui import Ui_Settings
 from pathlib import Path
 
 from PySide6.QtCore import (
@@ -16,7 +16,6 @@ from PySide6.QtWidgets import (
     QFileDialog,
 )
 
-__version__ = "1.0.0"
 
 # Settings.
 class Settings(QDialog, Ui_Settings):
@@ -27,32 +26,37 @@ class Settings(QDialog, Ui_Settings):
 
         self.init_ui()
 
-    def init_ui(self):
-        self.setupUi(self)
-
-        self.open_btn.clicked.connect(self.open_folder)
-
         self.get_settings()
         self.set_settings()
 
         self.exec()
 
+    def init_ui(self):
+        self.setupUi(self)
+        self.open_btn.clicked.connect(self.open_folder)
 
-    def open_folder(self):
+    def open_folder(self) -> None:
         self.path = QFileDialog.getExistingDirectory(
-            self, "Abrir carpeta", self.path_edit.text())
+            self,
+            self.tr("Abrir carpeta"),
+            self.path_edit.text()
+        )
+
         if self.path != '':
             self.path_edit.setText(self.path)
 
-    def get_settings(self):
+    def get_settings(self) -> None:
         self.preferences = QSettings("GUIDownloader", "Preferences")
 
-    def set_settings(self):
-        self.path_edit.setText(self.preferences.value("download_path", str(Path.home() / "Downloads")))
-  
+    def set_settings(self) -> None:
+        self.path_edit.setText(self.preferences.value(
+            "download_path", str(Path.home() / "Downloads")))
+
     def closeEvent(self, event) -> None:
         self.preferences.setValue("download_path", self.path_edit.text())
         self.parent.download_path = self.path_edit.text()
+        event.accept()
+
 
 def main():
     app = QApplication(sys.argv)
