@@ -1,10 +1,13 @@
 import yt_dlp  # type: ignore
 
 from typing import Any
-from Download import Download
-from PySide6.QtCore import QThread, Signal
-
-from constants import FFMPEG
+from constants import APP_NAME
+from src.models.download import Download
+from PySide6.QtCore import (
+    Signal,
+    QThread,
+    QSettings,
+)
 
 
 class DownloadWorker(QThread):
@@ -36,6 +39,7 @@ class DownloadWorker(QThread):
         """
         super(DownloadWorker, self).__init__()
         self.download: Download = download
+        self.ffmpeg_path = QSettings(APP_NAME, "ffmpeg_path")
 
     def run(self) -> None:
         url: str = self.download.get_url()
@@ -55,7 +59,7 @@ class DownloadWorker(QThread):
 
             ydl_opts = {
                 "format": "bestaudio/best",
-                "ffmpeg_location": FFMPEG,
+                "ffmpeg_location": self.ffmpeg_path,
                 "postprocessors": [{
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": preferred_codec,
@@ -66,7 +70,7 @@ class DownloadWorker(QThread):
             }
         else:
             ydl_opts = {
-                "ffmpeg_location": FFMPEG,
+                "ffmpeg_location": self.ffmpeg_path,
                 "format": f"bestvideo+bestaudio[ext={user_format}]/best",
                 "merge_output_format": user_format,
                 "progress_hooks": [self.progress_hook],

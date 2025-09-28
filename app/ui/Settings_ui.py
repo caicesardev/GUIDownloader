@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Settings.ui'
+## Form generated from reading UI file 'Settingszkgrxz.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.7.2
+## Created by: Qt User Interface Compiler version 6.9.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -88,27 +88,44 @@ class Ui_Settings(object):
         self.group_box_settings.setFlat(True)
         self.gridLayout = QGridLayout(self.group_box_settings)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setHorizontalSpacing(10)
-        self.gridLayout.setContentsMargins(15, 15, 15, 15)
-        self.label_2 = QLabel(self.group_box_settings)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
-
-        self.path_edit = QLineEdit(self.group_box_settings)
-        self.path_edit.setObjectName(u"path_edit")
-        self.path_edit.setMinimumSize(QSize(0, 35))
-        self.path_edit.setReadOnly(True)
-
-        self.gridLayout.addWidget(self.path_edit, 0, 1, 1, 1)
-
         self.open_btn = QToolButton(self.group_box_settings)
         self.open_btn.setObjectName(u"open_btn")
         self.open_btn.setMinimumSize(QSize(35, 35))
         self.open_btn.setFont(font)
         self.open_btn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
-        self.gridLayout.addWidget(self.open_btn, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.open_btn, 1, 2, 1, 1)
+
+        self.path_label = QLabel(self.group_box_settings)
+        self.path_label.setObjectName(u"path_label")
+
+        self.gridLayout.addWidget(self.path_label, 1, 0, 1, 1)
+
+        self.ffmpeg_label = QLabel(self.group_box_settings)
+        self.ffmpeg_label.setObjectName(u"ffmpeg_label")
+
+        self.gridLayout.addWidget(self.ffmpeg_label, 2, 0, 1, 1)
+
+        self.ffmpeg_path_edit = QLineEdit(self.group_box_settings)
+        self.ffmpeg_path_edit.setObjectName(u"ffmpeg_path_edit")
+        self.ffmpeg_path_edit.setMinimumSize(QSize(0, 35))
+        self.ffmpeg_path_edit.setReadOnly(True)
+
+        self.gridLayout.addWidget(self.ffmpeg_path_edit, 2, 1, 1, 1)
+
+        self.path_edit = QLineEdit(self.group_box_settings)
+        self.path_edit.setObjectName(u"path_edit")
+        self.path_edit.setMinimumSize(QSize(0, 35))
+        self.path_edit.setReadOnly(True)
+
+        self.gridLayout.addWidget(self.path_edit, 1, 1, 1, 1)
+
+        self.open_ffmpeg_path = QToolButton(self.group_box_settings)
+        self.open_ffmpeg_path.setObjectName(u"open_ffmpeg_path")
+        self.open_ffmpeg_path.setMinimumSize(QSize(35, 35))
+        self.open_ffmpeg_path.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+        self.gridLayout.addWidget(self.open_ffmpeg_path, 2, 2, 1, 1)
 
 
         self.verticalLayout_2.addWidget(self.group_box_settings)
@@ -127,11 +144,14 @@ class Ui_Settings(object):
         self.lbl_settings.setText(QCoreApplication.translate("Settings", u"Configuraci\u00f3n", None))
         self.lbl_settings_description.setText(QCoreApplication.translate("Settings", u"Administra los par\u00e1metros de la aplicaci\u00f3n", None))
         self.group_box_settings.setTitle(QCoreApplication.translate("Settings", u"Descargas", None))
-        self.label_2.setText(QCoreApplication.translate("Settings", u"Ruta:", None))
-        self.path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Ruta de descarga...", None))
 #if QT_CONFIG(tooltip)
         self.open_btn.setToolTip(QCoreApplication.translate("Settings", u"Seleccionar carpeta", None))
 #endif // QT_CONFIG(tooltip)
         self.open_btn.setText(QCoreApplication.translate("Settings", u"...", None))
+        self.path_label.setText(QCoreApplication.translate("Settings", u"Ruta:", None))
+        self.ffmpeg_label.setText(QCoreApplication.translate("Settings", u"FFMPEG:", None))
+        self.ffmpeg_path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Ruta de FFMPEG...", None))
+        self.path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Ruta de descarga...", None))
+        self.open_ffmpeg_path.setText(QCoreApplication.translate("Settings", u"...", None))
     # retranslateUi
 
