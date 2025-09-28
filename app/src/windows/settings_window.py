@@ -58,13 +58,14 @@ class SettingsWindow(QDialog, Ui_Settings):
             )
         )
 
-        self.ffmpeg_path_edit.setText(
-            str(
-                self.preferences.value(
-                    "ffmpeg_path"
-                )
+        ffmpeg_path = str(
+            self.preferences.value(
+                "ffmpeg_path",
+                ""
             )
         )
+
+        self.ffmpeg_path_edit.setText(ffmpeg_path if ffmpeg_path else "")
 
     def closeEvent(self, event) -> None:
         self.preferences.setValue("download_path", self.path_edit.text())

@@ -78,6 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         )
         self.ffmpeg_path = self.preferences.value(
             "ffmpeg_path",
+            ""
         )
 
     def save_settings(self) -> None:

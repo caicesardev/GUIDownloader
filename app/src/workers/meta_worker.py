@@ -44,7 +44,7 @@ class MetaWorker(QThread):
             "skip_download": True,
         }
 
-        meta_dict: Dict[str, Any] = {}
+        meta_dict = {}
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             meta_dict = ydl.extract_info(self.url, download=False)
             self.metadata = meta_dict.get(self.key, {})  # type: ignore
