@@ -166,11 +166,14 @@
              <height>35</height>
             </size>
            </property>
-           <property name="readOnly">
-            <bool>true</bool>
+           <property name="toolTip">
+            <string>Carpeta que contiene ffmpeg. Déjalo vacío para usar el incluido.</string>
            </property>
            <property name="placeholderText">
-            <string>Ruta de FFMPEG...</string>
+            <string>Automático (FFmpeg incluido)</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

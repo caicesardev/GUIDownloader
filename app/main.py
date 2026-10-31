@@ -1,23 +1,29 @@
 import sys
 
-from src.windows.main_window import MainWindow
-from PySide6.QtCore import (
-    QCoreApplication,
-    QLocale,
-    QTranslator,
-)
+from PySide6.QtCore import QLibraryInfo, QLocale, QTranslator
 from PySide6.QtWidgets import QApplication
 
+from constants import APP_NAME, VERSION
+from src.windows.main_window import MainWindow
 
-def main():
+APP_LOCALE = QLocale(QLocale.Language.Spanish)
+
+
+def install_qt_translations(app: QApplication) -> None:
+    translator = QTranslator(app)
+    translations_path = QLibraryInfo.path(QLibraryInfo.LibraryPath.TranslationsPath)
+    if translator.load(APP_LOCALE, "qtbase", "_", translations_path):
+        app.installTranslator(translator)
+
+
+def main() -> None:
     app = QApplication(sys.argv)
-    translator = QTranslator()
-    if translator.load(QLocale(), "", "", ":/app/i18n"):
-        QCoreApplication.installTranslator(translator)
-    app.installTranslator(translator)
+    app.setApplicationName(APP_NAME)
+    app.setApplicationVersion(VERSION)
+    install_qt_translations(app)
 
-    gui = MainWindow()
-    gui.show()
+    window = MainWindow()
+    window.show()
 
     sys.exit(app.exec())
 

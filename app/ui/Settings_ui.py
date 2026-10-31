@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Settingszkgrxz.ui'
+## Form generated from reading UI file 'Settings.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.2
+## Created by: Qt User Interface Compiler version 6.12.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -109,7 +109,7 @@ class Ui_Settings(object):
         self.ffmpeg_path_edit = QLineEdit(self.group_box_settings)
         self.ffmpeg_path_edit.setObjectName(u"ffmpeg_path_edit")
         self.ffmpeg_path_edit.setMinimumSize(QSize(0, 35))
-        self.ffmpeg_path_edit.setReadOnly(True)
+        self.ffmpeg_path_edit.setClearButtonEnabled(True)
 
         self.gridLayout.addWidget(self.ffmpeg_path_edit, 2, 1, 1, 1)
 
@@ -150,7 +150,10 @@ class Ui_Settings(object):
         self.open_btn.setText(QCoreApplication.translate("Settings", u"...", None))
         self.path_label.setText(QCoreApplication.translate("Settings", u"Ruta:", None))
         self.ffmpeg_label.setText(QCoreApplication.translate("Settings", u"FFMPEG:", None))
-        self.ffmpeg_path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Ruta de FFMPEG...", None))
+#if QT_CONFIG(tooltip)
+        self.ffmpeg_path_edit.setToolTip(QCoreApplication.translate("Settings", u"Carpeta que contiene ffmpeg. D\u00e9jalo vac\u00edo para usar el incluido.", None))
+#endif // QT_CONFIG(tooltip)
+        self.ffmpeg_path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Autom\u00e1tico (FFmpeg incluido)", None))
         self.path_edit.setPlaceholderText(QCoreApplication.translate("Settings", u"Ruta de descarga...", None))
         self.open_ffmpeg_path.setText(QCoreApplication.translate("Settings", u"...", None))
     # retranslateUi

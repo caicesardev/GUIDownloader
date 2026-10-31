@@ -1,238 +1,283 @@
 import sys
-import os
-import re
-import subprocess
-import getpass
-import traceback
-
+from collections.abc import Iterable
 from pathlib import Path
-from constants import APP_NAME
-from src.models.download import Download
+from typing import Any
+
+from PySide6.QtCore import QProcess, QSignalBlocker, QUrl
+from PySide6.QtGui import QCloseEvent, QDesktopServices
+from PySide6.QtWidgets import QApplication, QComboBox, QMainWindow, QMessageBox
+
+from src.models.download_request import (
+    AudioDownloadRequest,
+    AudioOutput,
+    DownloadRequest,
+    VideoDownloadRequest,
+)
 from src.models.video_metadata import VideoMetadata
-from src.workers.meta_worker import MetaWorker
-from src.workers.download_worker import DownloadWorker
-from ui.MainWindow_ui import Ui_MainWindow
+from src.services.ffmpeg_locator import locate_ffmpeg
+from src.services.ydl_options import base_options
+from src.services.youtube_url import is_youtube_url
+from src.settings.preferences import Preferences
 from src.windows.about_window import AboutWindow
 from src.windows.settings_window import SettingsWindow
+from src.workers.download_worker import DownloadWorker
+from src.workers.metadata_worker import MetadataWorker
+from ui.MainWindow_ui import Ui_MainWindow
 
-from PySide6.QtCore import (
-    QSettings,
-    QSize,
-    QPoint,
-)
-from PySide6.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QMessageBox,
-    QComboBox,
-)
+STATUS_TIMEOUT_MS = 5000
+DOWNLOAD_LABEL = "Descargar"
+CANCEL_LABEL = "Cancelar"
+
+ComboOptions = Iterable[tuple[str, Any]]
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-
-        self.init_ui()
-
-        self.get_settings()
-        self.set_settings()
-
-        self.username: str = getpass.getuser()
-        self.video_metadata: VideoMetadata = VideoMetadata()
-        self.download_path = ""
-        self.ffmpeg_path = ""
-
-    def init_ui(self) -> None:
+    def __init__(self) -> None:
+        super().__init__()
         self.setupUi(self)
+        self._preferences = Preferences()
+        self._default_description = self.lbl_app_description.text()
+        self._requested_url = ""
+        self._metadata: VideoMetadata | None = None
+        self._metadata_worker: MetadataWorker | None = None
+        self._download_worker: DownloadWorker | None = None
+        self._restore_geometry()
+        self._connect_signals()
 
-        # For testings
-        self.url_input.setText("https://www.youtube.com/watch?v=dP15zlyra3c")
-        self.url_input.editingFinished.connect(self.on_url_input_finished)
+    def _restore_geometry(self) -> None:
+        geometry = self._preferences.window_geometry
+        if geometry is not None:
+            self.restoreGeometry(geometry)
 
-        # Download button.
-        self.download_button.clicked.connect(self.download)
-
-        # Menu buttons
-        self.action_about.triggered.connect(AboutWindow)
-        self.action_about_qt.triggered.connect(QApplication.aboutQt)
-        self.action_restart.triggered.connect(self.on_restart)
+    def _connect_signals(self) -> None:
+        self.url_input.editingFinished.connect(self._fetch_metadata)
+        self.combo_video_quality.currentIndexChanged.connect(self._show_video_containers)
+        for selector in (
+            self.combo_video_quality,
+            self.combo_video_format,
+            self.combo_audio_quality,
+            self.combo_audio_format,
+        ):
+            selector.currentIndexChanged.connect(self._update_download_availability)
+        self.tab_widget.currentChanged.connect(self._update_download_availability)
+        self.download_button.clicked.connect(self._toggle_download)
+        self.action_settings.triggered.connect(self._open_settings)
+        self.action_restart.triggered.connect(self._restart)
         self.action_exit.triggered.connect(self.close)
-        self.action_settings.triggered.connect(lambda: SettingsWindow(self))
+        self.action_about.triggered.connect(self._open_about)
+        self.action_about_qt.triggered.connect(QApplication.aboutQt)
 
-    def get_settings(self) -> None:
-        self.w_attrib = QSettings(APP_NAME, "WindowAttributes")
-        self.preferences = QSettings(APP_NAME, "Preferences")
+    def _ydl_options(self) -> dict[str, Any]:
+        return base_options(locate_ffmpeg(self._preferences.ffmpeg_location))
 
-    def set_settings(self) -> None:
-        # Initial window size/pos last saved. Use default values for first time.
-        pos: QPoint = self.w_attrib.value(
-            "pos", QPoint(50, 50))  # type: ignore
-        if any(x < 0 for x in (pos.x(), pos.y())):
-            pos = QPoint(50, 50)
-        self.resize(self.w_attrib.value(
-            "size", QSize(270, 225)))  # type: ignore
-        self.move(pos)
-        self.download_path = self.preferences.value(
-            "download_path",
-            str(Path.home() / "Downloads")
+    def _fetch_metadata(self) -> None:
+        url = self.url_input.text().strip()
+        if not url or url == self._requested_url or self._is_busy():
+            return
+        if not is_youtube_url(url):
+            self.status_bar.showMessage("Introduce una URL de YouTube válida.", STATUS_TIMEOUT_MS)
+            return
+        self._requested_url = url
+        self._clear_metadata()
+        worker = MetadataWorker(url, self._ydl_options())
+        worker.metadata_ready.connect(self._show_metadata)
+        worker.failed.connect(self._show_metadata_error)
+        worker.finished.connect(self._on_metadata_worker_finished)
+        self._metadata_worker = worker
+        self.url_input.setEnabled(False)
+        self.status_bar.showMessage("Obteniendo formatos disponibles…")
+        worker.start()
+
+    def _show_metadata(self, metadata: VideoMetadata) -> None:
+        if not metadata.has_formats:
+            self._show_metadata_error("No se han encontrado formatos descargables para esta URL.")
+            return
+        self._metadata = metadata
+        self.lbl_app_description.setText(metadata.summary)
+        self._fill_combo(self.combo_video_quality, ((video.label, video) for video in metadata.video_formats))
+        self._fill_combo(self.combo_audio_quality, ((audio.label, audio) for audio in metadata.audio_formats))
+        self._fill_combo(self.combo_audio_format, ((output.label, output) for output in AudioOutput))
+
+    def _show_metadata_error(self, message: str) -> None:
+        QMessageBox.warning(self, "No se pudo obtener el vídeo", message)
+
+    def _on_metadata_worker_finished(self) -> None:
+        self.url_input.setEnabled(True)
+        if self._metadata is None:
+            self._requested_url = ""
+            self.status_bar.clearMessage()
+            return
+        self.status_bar.showMessage(
+            f"{len(self._metadata.video_formats)} formatos de vídeo y "
+            f"{len(self._metadata.audio_formats)} de audio disponibles.",
+            STATUS_TIMEOUT_MS,
         )
-        self.ffmpeg_path = self.preferences.value(
-            "ffmpeg_path",
-            ""
-        )
 
-    def save_settings(self) -> None:
-        # Remember window postion and size on exit.
-        self.w_attrib.setValue("size", self.size())
-        self.w_attrib.setValue("pos", self.pos())
+    def _clear_metadata(self) -> None:
+        self._metadata = None
+        self.lbl_app_description.setText(self._default_description)
+        for selector in (
+            self.combo_video_quality,
+            self.combo_video_format,
+            self.combo_audio_quality,
+            self.combo_audio_format,
+        ):
+            self._fill_combo(selector, ())
 
-    def download(self) -> None:
-        try:
-            url = self.url_input.text()
-
-            if not url:
-                self.status_bar.showMessage(
-                    self.tr("Por favor, introduce una URL."),
-                    3000
-                )
-                return
-
-            if not self.video_metadata:
-                return
-
-            video_path: str = f"{self.download_path}/{self.video_metadata.title}.{self.combo_video_format.currentText().lower()}"
-            audio_path: str = f"{self.download_path}/{self.video_metadata.title}.{self.combo_audio_format.currentText().lower()}"
-
-            audio_only: bool = True if self.tab_widget.currentWidget(
-            ).objectName() == "audio_tab" else False
-
-            # If the file is not already downloaded.
-            if not os.path.exists(video_path) and not os.path.exists(audio_path):
-                self.download_button.setEnabled(False)
-                self.download_button.setText("Actualmente descargando...")
-                # Create a download object.
-                download = Download({
-                    'url': url,
-                    'format': self.combo_video_format.currentText(),
-                    'quality': '',
-                    'audio_only': audio_only,
-                    'download_path': audio_path if audio_only else video_path
-                })
-                # Create a worker object.
-                self.worker = DownloadWorker(download)
-                # Connect worker signals and slots with UI.
-                self.worker.progress.connect(self.update_progress_bar)
-                self.worker.progress.connect(self.update_status_bar)
-                self.worker.speed.connect(self.update_speed_lbl)
-                self.worker.d_finished.connect(self.on_download_finished)
-                # Start the worker.
-                self.worker.start()
-            else:
-                QMessageBox.information(
-                    self,
-                    "Vídeo ya descargado",
-                    "El vídeo o audio ya está descargado."
-                )
-
-        except Exception:
-            print(traceback.format_exc())
-            QMessageBox.information(
-                self,
-                "Enlace no válido",
-                "El enlace introducido no es válido o no se pudo recopilar."
-            )
-
-    def get_video_metadata(self) -> bool:
-        try:
-            success: bool = True
-            self.download_button.setEnabled(False)
-            self.status_bar.showMessage(self.tr("Obteniendo metadatos..."), -1)
-            self.meta_worker = MetaWorker(self.url_input.text())
-            self.meta_worker.finished.connect(self.on_meta_worker_finished)
-            self.meta_worker.start()
-        except Exception as e:
-            success = False
-            print(e)
-
-        return success
+    def _show_video_containers(self) -> None:
+        video_format = self.combo_video_quality.currentData()
+        containers = video_format.compatible_containers if video_format else ()
+        self._fill_combo(self.combo_video_format, ((container.upper(), container) for container in containers))
 
     @staticmethod
-    def is_valid_yt(url: str) -> bool:
-        yt_regex = r'^(https?://)?(www\.)?(youtube\.com|youtu\.?be)/.+$'
-        return re.match(yt_regex, url) is not None
+    def _fill_combo(combo: QComboBox, options: ComboOptions) -> None:
+        with QSignalBlocker(combo):
+            combo.clear()
+            for label, value in options:
+                combo.addItem(label, value)
+            combo.setCurrentIndex(0 if combo.count() else -1)
+        combo.setEnabled(combo.count() > 0)
+        combo.currentIndexChanged.emit(combo.currentIndex())
 
-    def update_progress_bar(self, value):
-        self.progress_bar.setValue(value)
+    def _update_download_availability(self) -> None:
+        if not self._is_downloading():
+            self.download_button.setEnabled(self._selected_request() is not None)
 
-    def update_status_bar(self, value):
-        self.status_bar.showMessage(
-            f"Descargando {self.video_metadata.title} - {value}%"
-        )
+    def _selected_request(self) -> DownloadRequest | None:
+        if self._metadata is None:
+            return None
+        if self.tab_widget.currentWidget() is self.audio_tab:
+            return self._selected_audio_request(self._metadata)
+        return self._selected_video_request(self._metadata)
 
-    def update_speed_lbl(self, value):
-        # self.speed_label.setText(f"Velocidad: {size(value, system=si)}B/s")
-        pass
+    def _selected_video_request(self, metadata: VideoMetadata) -> VideoDownloadRequest | None:
+        video_format = self.combo_video_quality.currentData()
+        container = self.combo_video_format.currentData()
+        if video_format is None or container is None:
+            return None
+        return VideoDownloadRequest(metadata.url, self._preferences.download_directory, video_format, container)
 
-    def populate_format_combo_box(self, combo_box: QComboBox, formats: list) -> None:
-        if not combo_box.isEnabled():
-            combo_box.setEnabled(True)
+    def _selected_audio_request(self, metadata: VideoMetadata) -> AudioDownloadRequest | None:
+        audio_format = self.combo_audio_quality.currentData()
+        output = self.combo_audio_format.currentData()
+        if audio_format is None or output is None:
+            return None
+        return AudioDownloadRequest(metadata.url, self._preferences.download_directory, audio_format, output)
 
-        if not formats:
+    def _toggle_download(self) -> None:
+        if self._is_downloading():
+            self._cancel_download()
+        else:
+            self._start_download()
+
+    def _start_download(self) -> None:
+        request = self._selected_request()
+        if request is None:
             return
-
-        combo_box.clear()
-        combo_box.addItems(formats)
-
-    def on_url_input_finished(self) -> None:
-        if not self.is_valid_yt(self.url_input.text()):
-            self.status_bar.showMessage(
-                self.tr("Por favor, introduce una URL de YouTube válida."),
-                3000
+        ffmpeg_location = locate_ffmpeg(self._preferences.ffmpeg_location)
+        if request.requires_ffmpeg and ffmpeg_location is None:
+            QMessageBox.warning(
+                self,
+                "FFmpeg no encontrado",
+                "Este formato necesita FFmpeg. Indica su carpeta en Archivo > Configuración.",
             )
             return
+        worker = DownloadWorker(request, base_options(ffmpeg_location))
+        worker.progress_changed.connect(self.progress_bar.setValue)
+        worker.status_changed.connect(self.status_bar.showMessage)
+        worker.cancellable_changed.connect(self.download_button.setEnabled)
+        worker.completed.connect(self._show_download_completed)
+        worker.failed.connect(self._show_download_error)
+        worker.cancelled.connect(self._show_download_cancelled)
+        worker.finished.connect(self._on_download_worker_finished)
+        self._download_worker = worker
+        self._set_downloading(True)
+        worker.start()
 
-        if self.video_metadata and self.video_metadata.original_url == self.url_input.text():
-            self.status_bar.showMessage(
-                self.tr("Por favor, introduce una URL diferente."),
-                3000
-            )
+    def _cancel_download(self) -> None:
+        if self._download_worker is None:
             return
+        self._download_worker.request_cancel()
+        self.download_button.setEnabled(False)
+        self.status_bar.showMessage("Cancelando descarga…")
 
-        self.get_video_metadata()
-
-    def on_meta_worker_finished(self, value: VideoMetadata) -> None:
-        self.video_metadata = value
-        self.status_bar.clearMessage()
-        self.populate_format_combo_box(
-            self.combo_video_format,
-            self.video_metadata.formats["video_formats"]
-        )
-        self.populate_format_combo_box(
-            self.combo_audio_format,
-            self.video_metadata.formats["audio_formats"]
-        )
-        if self.video_metadata:
+    def _set_downloading(self, downloading: bool) -> None:
+        self.url_input.setEnabled(not downloading)
+        self.tab_widget.setEnabled(not downloading)
+        self.download_button.setText(CANCEL_LABEL if downloading else DOWNLOAD_LABEL)
+        if downloading:
             self.download_button.setEnabled(True)
+        else:
+            self._update_download_availability()
 
-    def on_download_finished(self) -> None:
-        self.download_button.setEnabled(True)
-        self.download_button.setText(self.tr("Descargar"))
-        self.status_bar.showMessage(self.tr("Descarga completada."), 3000)
-        self.progress_bar.setValue(0)
-        QMessageBox.information(
+    def _show_download_completed(self, filepath: str) -> None:
+        downloaded_file = Path(filepath)
+        self.status_bar.showMessage("Descarga completada.", STATUS_TIMEOUT_MS)
+        dialog = QMessageBox(
+            QMessageBox.Icon.Information,
+            "Descarga completada",
+            f"Se ha guardado «{downloaded_file.name}».",
+            QMessageBox.StandardButton.Ok,
             self,
-            self.tr("Descarga completada."),
-            self.tr(
-                f"Se ha completado la descarga de {self.video_metadata.title}.{self.combo_video_format.currentText().lower()}"
-            )
         )
+        open_folder_button = dialog.addButton("Abrir carpeta", QMessageBox.ButtonRole.ActionRole)
+        dialog.exec()
+        if dialog.clickedButton() is open_folder_button:
+            QDesktopServices.openUrl(QUrl.fromLocalFile(str(downloaded_file.parent)))
 
-    def on_restart(self) -> None:
-        self.close()
-        subprocess.Popen([sys.executable, "./main.py"])
-        os.system('cls' if os.name == 'nt' else 'clear')
+    def _show_download_error(self, message: str) -> None:
+        self.status_bar.clearMessage()
+        QMessageBox.critical(self, "Error en la descarga", message)
 
-    # Event called when trying to exit the program.
-    def closeEvent(self, event) -> None:
-        self.save_settings()
+    def _show_download_cancelled(self) -> None:
+        self.status_bar.showMessage("Descarga cancelada.", STATUS_TIMEOUT_MS)
+
+    def _on_download_worker_finished(self) -> None:
+        self.progress_bar.setValue(0)
+        self._set_downloading(False)
+
+    def _is_downloading(self) -> bool:
+        return self._download_worker is not None and self._download_worker.isRunning()
+
+    def _is_busy(self) -> bool:
+        is_fetching = self._metadata_worker is not None and self._metadata_worker.isRunning()
+        return is_fetching or self._is_downloading()
+
+    def _open_settings(self) -> None:
+        SettingsWindow(self._preferences, self).exec()
+
+    def _open_about(self) -> None:
+        AboutWindow(self).exec()
+
+    def _restart(self) -> None:
+        if self.close():
+            QProcess.startDetached(sys.executable, self._relaunch_arguments())
+
+    @staticmethod
+    def _relaunch_arguments() -> list[str]:
+        if getattr(sys, "frozen", False):
+            return sys.argv[1:]
+        return [str(Path(sys.argv[0]).resolve()), *sys.argv[1:]]
+
+    def _confirm_exit_during_download(self) -> bool:
+        answer = QMessageBox.question(
+            self,
+            "Descarga en curso",
+            "Hay una descarga en curso. ¿Quieres cancelarla y salir?",
+        )
+        return answer == QMessageBox.StandardButton.Yes
+
+    def _stop_workers(self) -> None:
+        if self._download_worker is not None:
+            self._download_worker.request_cancel()
+            self._download_worker.wait()
+        if self._metadata_worker is not None:
+            self._metadata_worker.wait()
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        if self._is_downloading() and not self._confirm_exit_during_download():
+            event.ignore()
+            return
+        self._stop_workers()
+        self._preferences.window_geometry = self.saveGeometry()
         event.accept()

@@ -1,99 +1,98 @@
-import yt_dlp  # type: ignore
-
+from pathlib import Path
 from typing import Any
-from constants import APP_NAME
-from src.models.download import Download
-from PySide6.QtCore import (
-    Signal,
-    QThread,
-    QSettings,
-)
+
+import yt_dlp
+from PySide6.QtCore import QThread, Signal
+from yt_dlp.utils import DownloadCancelled, YoutubeDLError
+
+from src.models.download_request import DownloadRequest
+from src.services.ydl_options import describe_error
+from src.utils.formatting import format_bytes, format_duration
+
+OUTPUT_TEMPLATE = "%(title)s.%(ext)s"
+NO_CODEC = "none"
+POSTPROCESSOR_MESSAGES = {
+    "Merger": "Uniendo vídeo y audio…",
+    "ExtractAudio": "Convirtiendo audio…",
+}
+DEFAULT_POSTPROCESSOR_MESSAGE = "Procesando…"
 
 
 class DownloadWorker(QThread):
+    progress_changed = Signal(int)
+    status_changed = Signal(str)
+    completed = Signal(str)
+    failed = Signal(str)
+    cancelled = Signal()
+    cancellable_changed = Signal(bool)
 
-    """
-    Class that represents a download worker.
+    def __init__(self, request: DownloadRequest, ydl_options: dict[str, Any]) -> None:
+        super().__init__()
+        self._request = request
+        self._ydl_options = ydl_options
+        self._cancel_requested = False
+        self._partial_files: set[Path] = set()
 
-    Attributes:
-        finished (Signal): Signal that emits when the download is finished.
-        d_finished (Signal): Signal that emits when the download is finished.
-        progress (Signal): Signal that emits the download progress.
-        speed (Signal): Signal that emits the download speed.
-        is_running (Signal): Signal that emits when the download is running.
-    """
-
-    # Signals
-    finished = Signal()
-    d_finished = Signal()
-    progress = Signal(int)
-    speed = Signal(float)
-    is_running = Signal()
-
-    def __init__(self, download: Download) -> None:
-        """
-        Constructor.
-
-        Args:
-            download (Download): Download object
-        """
-        super(DownloadWorker, self).__init__()
-        self.download: Download = download
-        self.ffmpeg_path = QSettings(APP_NAME, "ffmpeg_path")
+    def request_cancel(self) -> None:
+        self._cancel_requested = True
 
     def run(self) -> None:
-        url: str = self.download.get_url()
-        audio_only: bool = self.download.get_audio_only()
-        user_format: str = self.download.get_format()
-        ydl_opts: dict[str, Any] = {}
-
-        if not url:
-            self.d_finished.emit()
+        try:
+            with yt_dlp.YoutubeDL(self._download_options()) as ydl:
+                info = ydl.extract_info(self._request.url, download=True)
+        except DownloadCancelled:
+            self._remove_partial_files()
+            self.cancelled.emit()
             return
-
-        if audio_only:
-            if user_format == "mp4":
-                preferred_codec = "aac"
-            else:
-                preferred_codec = user_format
-
-            ydl_opts = {
-                "format": "bestaudio/best",
-                "ffmpeg_location": self.ffmpeg_path,
-                "postprocessors": [{
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": preferred_codec,
-                    "preferredquality": self.download.get_quality(),
-                }],
-                "progress_hooks": [self.progress_hook],
-                "outtmpl": f"{self.download.get_download_path()}/%(title)s.%(ext)s"
-            }
-        else:
-            ydl_opts = {
-                "ffmpeg_location": self.ffmpeg_path,
-                "format": f"bestvideo+bestaudio[ext={user_format}]/best",
-                "merge_output_format": user_format,
-                "progress_hooks": [self.progress_hook],
-                "outtmpl": f"{self.download.get_download_path()}/%(title)s.%(ext)s"
-            }
-
-        if not ydl_opts:
-            self.d_finished.emit()
+        except YoutubeDLError as error:
+            self.failed.emit(describe_error(error))
             return
+        self.completed.emit(self._final_filepath(info))
 
-        with yt_dlp.YoutubeDL(ydl_opts) as ytdl:
-            ytdl.download([url])  # type:ignore
+    def _download_options(self) -> dict[str, Any]:
+        return {
+            **self._ydl_options,
+            **self._request.ydl_options(),
+            "paths": {"home": str(self._request.destination)},
+            "outtmpl": OUTPUT_TEMPLATE,
+            "progress_hooks": [self._on_progress],
+            "postprocessor_hooks": [self._on_postprocessing],
+        }
 
-        self.d_finished.emit()
+    def _on_progress(self, progress: dict[str, Any]) -> None:
+        if self._cancel_requested:
+            raise DownloadCancelled()
+        if progress["status"] != "downloading":
+            return
+        self._partial_files.add(Path(progress["tmpfilename"]))
+        self.cancellable_changed.emit(True)
+        total_bytes = progress.get("total_bytes") or progress.get("total_bytes_estimate")
+        if total_bytes:
+            self.progress_changed.emit(int(progress["downloaded_bytes"] * 100 / total_bytes))
+        self.status_changed.emit(self._describe_progress(progress))
 
-    def cancel(self) -> None:
-        self.terminate()
-        self.finished.emit()
+    def _on_postprocessing(self, progress: dict[str, Any]) -> None:
+        if progress["status"] == "started":
+            self.cancellable_changed.emit(False)
+            message = POSTPROCESSOR_MESSAGES.get(progress["postprocessor"], DEFAULT_POSTPROCESSOR_MESSAGE)
+            self.status_changed.emit(message)
 
-    def progress_hook(self, response: dict[str, Any]):
-        if response["status"] == "downloading":
-            speed: Any = response["speed"]
-            downloaded_percent = (
-                response["downloaded_bytes"] * 100) / response["total_bytes"]
-            self.progress.emit(downloaded_percent)
-            self.speed.emit(speed)
+    @staticmethod
+    def _describe_progress(progress: dict[str, Any]) -> str:
+        stream = progress.get("info_dict", {})
+        stream_kind = "vídeo" if stream.get("vcodec", NO_CODEC) != NO_CODEC else "audio"
+        details = [f"Descargando {stream_kind}"]
+        if speed := progress.get("speed"):
+            details.append(f"{format_bytes(speed)}/s")
+        if eta := progress.get("eta"):
+            details.append(f"quedan {format_duration(eta)}")
+        return " · ".join(details)
+
+    def _remove_partial_files(self) -> None:
+        for partial_file in self._partial_files:
+            partial_file.unlink(missing_ok=True)
+
+    @staticmethod
+    def _final_filepath(info: dict[str, Any]) -> str:
+        downloads = info.get("requested_downloads") or [{}]
+        return downloads[-1].get("filepath", "")
