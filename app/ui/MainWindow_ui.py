@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'MainWindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.2
+## Created by: Qt User Interface Compiler version 6.12.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,8 +16,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QFrame,
+    QGridLayout, QLabel, QLineEdit, QMainWindow,
     QMenu, QMenuBar, QProgressBar, QPushButton,
     QSizePolicy, QStatusBar, QTabWidget, QVBoxLayout,
     QWidget)
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(616, 420)
+        MainWindow.resize(640, 460)
         icon = QIcon()
         icon.addFile(u":/res/images/downloading.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
@@ -91,6 +91,7 @@ class Ui_MainWindow(object):
         self.lbl_app_description.setObjectName(u"lbl_app_description")
         sizePolicy1.setHeightForWidth(self.lbl_app_description.sizePolicy().hasHeightForWidth())
         self.lbl_app_description.setSizePolicy(sizePolicy1)
+        self.lbl_app_description.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.lbl_app_description)
 
@@ -116,12 +117,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.url_input)
 
-        self.progress_bar = QProgressBar(self.inputs_frame)
-        self.progress_bar.setObjectName(u"progress_bar")
-        self.progress_bar.setValue(0)
-
-        self.verticalLayout_3.addWidget(self.progress_bar)
-
         self.tab_widget = QTabWidget(self.inputs_frame)
         self.tab_widget.setObjectName(u"tab_widget")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -129,57 +124,80 @@ class Ui_MainWindow(object):
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.tab_widget.sizePolicy().hasHeightForWidth())
         self.tab_widget.setSizePolicy(sizePolicy3)
-        self.tab_widget.setMinimumSize(QSize(0, 100))
+        self.tab_widget.setMinimumSize(QSize(0, 130))
         self.tab_widget.setFont(font)
-        self.tab_widget.setMovable(True)
         self.video_tab = QWidget()
         self.video_tab.setObjectName(u"video_tab")
-        self.horizontalLayout = QHBoxLayout(self.video_tab)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.combo_video_format = QComboBox(self.video_tab)
-        self.combo_video_format.addItem("")
-        self.combo_video_format.setObjectName(u"combo_video_format")
-        self.combo_video_format.setEnabled(False)
-        self.combo_video_format.setMinimumSize(QSize(0, 33))
-        self.combo_video_format.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.video_form_layout = QFormLayout(self.video_tab)
+        self.video_form_layout.setObjectName(u"video_form_layout")
+        self.video_form_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        self.lbl_video_quality = QLabel(self.video_tab)
+        self.lbl_video_quality.setObjectName(u"lbl_video_quality")
 
-        self.horizontalLayout.addWidget(self.combo_video_format)
+        self.video_form_layout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.lbl_video_quality)
 
         self.combo_video_quality = QComboBox(self.video_tab)
-        self.combo_video_quality.addItem("")
         self.combo_video_quality.setObjectName(u"combo_video_quality")
         self.combo_video_quality.setEnabled(False)
         self.combo_video_quality.setMinimumSize(QSize(0, 33))
         self.combo_video_quality.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
-        self.horizontalLayout.addWidget(self.combo_video_quality)
+        self.video_form_layout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.combo_video_quality)
+
+        self.lbl_video_format = QLabel(self.video_tab)
+        self.lbl_video_format.setObjectName(u"lbl_video_format")
+
+        self.video_form_layout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.lbl_video_format)
+
+        self.combo_video_format = QComboBox(self.video_tab)
+        self.combo_video_format.setObjectName(u"combo_video_format")
+        self.combo_video_format.setEnabled(False)
+        self.combo_video_format.setMinimumSize(QSize(0, 33))
+        self.combo_video_format.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+        self.video_form_layout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.combo_video_format)
 
         self.tab_widget.addTab(self.video_tab, "")
         self.audio_tab = QWidget()
         self.audio_tab.setObjectName(u"audio_tab")
-        self.horizontalLayout_2 = QHBoxLayout(self.audio_tab)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.combo_audio_format = QComboBox(self.audio_tab)
-        self.combo_audio_format.addItem("")
-        self.combo_audio_format.setObjectName(u"combo_audio_format")
-        self.combo_audio_format.setEnabled(False)
-        self.combo_audio_format.setMinimumSize(QSize(0, 33))
-        self.combo_audio_format.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.audio_form_layout = QFormLayout(self.audio_tab)
+        self.audio_form_layout.setObjectName(u"audio_form_layout")
+        self.audio_form_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        self.lbl_audio_quality = QLabel(self.audio_tab)
+        self.lbl_audio_quality.setObjectName(u"lbl_audio_quality")
 
-        self.horizontalLayout_2.addWidget(self.combo_audio_format)
+        self.audio_form_layout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.lbl_audio_quality)
 
         self.combo_audio_quality = QComboBox(self.audio_tab)
-        self.combo_audio_quality.addItem("")
         self.combo_audio_quality.setObjectName(u"combo_audio_quality")
         self.combo_audio_quality.setEnabled(False)
         self.combo_audio_quality.setMinimumSize(QSize(0, 33))
         self.combo_audio_quality.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
-        self.horizontalLayout_2.addWidget(self.combo_audio_quality)
+        self.audio_form_layout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.combo_audio_quality)
+
+        self.lbl_audio_format = QLabel(self.audio_tab)
+        self.lbl_audio_format.setObjectName(u"lbl_audio_format")
+
+        self.audio_form_layout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.lbl_audio_format)
+
+        self.combo_audio_format = QComboBox(self.audio_tab)
+        self.combo_audio_format.setObjectName(u"combo_audio_format")
+        self.combo_audio_format.setEnabled(False)
+        self.combo_audio_format.setMinimumSize(QSize(0, 33))
+        self.combo_audio_format.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+        self.audio_form_layout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.combo_audio_format)
 
         self.tab_widget.addTab(self.audio_tab, "")
 
         self.verticalLayout_3.addWidget(self.tab_widget)
+
+        self.progress_bar = QProgressBar(self.inputs_frame)
+        self.progress_bar.setObjectName(u"progress_bar")
+        self.progress_bar.setValue(0)
+
+        self.verticalLayout_3.addWidget(self.progress_bar)
 
         self.download_button = QPushButton(self.inputs_frame)
         self.download_button.setObjectName(u"download_button")
@@ -245,16 +263,28 @@ class Ui_MainWindow(object):
         self.url_input.setToolTip(QCoreApplication.translate("MainWindow", u"Introduce una URL de YouTube", None))
 #endif // QT_CONFIG(tooltip)
         self.url_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Introduce una URL de YouTube...", None))
-        self.combo_video_format.setItemText(0, QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
-
-        self.combo_video_quality.setItemText(0, QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
-
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.video_tab), QCoreApplication.translate("MainWindow", u"Formato de v\u00eddeo", None))
-        self.combo_audio_format.setItemText(0, QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
-
-        self.combo_audio_quality.setItemText(0, QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
-
-        self.tab_widget.setTabText(self.tab_widget.indexOf(self.audio_tab), QCoreApplication.translate("MainWindow", u"Formato de audio", None))
+        self.lbl_video_quality.setText(QCoreApplication.translate("MainWindow", u"Calidad:", None))
+#if QT_CONFIG(tooltip)
+        self.combo_video_quality.setToolTip(QCoreApplication.translate("MainWindow", u"Pista de v\u00eddeo disponible en YouTube", None))
+#endif // QT_CONFIG(tooltip)
+        self.combo_video_quality.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
+        self.lbl_video_format.setText(QCoreApplication.translate("MainWindow", u"Formato:", None))
+#if QT_CONFIG(tooltip)
+        self.combo_video_format.setToolTip(QCoreApplication.translate("MainWindow", u"Contenedor del archivo final", None))
+#endif // QT_CONFIG(tooltip)
+        self.combo_video_format.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.video_tab), QCoreApplication.translate("MainWindow", u"V\u00eddeo", None))
+        self.lbl_audio_quality.setText(QCoreApplication.translate("MainWindow", u"Calidad:", None))
+#if QT_CONFIG(tooltip)
+        self.combo_audio_quality.setToolTip(QCoreApplication.translate("MainWindow", u"Pista de audio disponible en YouTube", None))
+#endif // QT_CONFIG(tooltip)
+        self.combo_audio_quality.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
+        self.lbl_audio_format.setText(QCoreApplication.translate("MainWindow", u"Formato:", None))
+#if QT_CONFIG(tooltip)
+        self.combo_audio_format.setToolTip(QCoreApplication.translate("MainWindow", u"Formato del archivo de audio final", None))
+#endif // QT_CONFIG(tooltip)
+        self.combo_audio_format.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No hay formatos disponibles", None))
+        self.tab_widget.setTabText(self.tab_widget.indexOf(self.audio_tab), QCoreApplication.translate("MainWindow", u"Audio", None))
 #if QT_CONFIG(tooltip)
         self.download_button.setToolTip(QCoreApplication.translate("MainWindow", u"Descargar enlace de YouTube", None))
 #endif // QT_CONFIG(tooltip)

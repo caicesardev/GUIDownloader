@@ -1,8 +1,5 @@
 from pathlib import Path
 
-"""
-Constants.
-"""
-
-VERSION = "1.0.0"
-FFMPEG = "bin/ffmpeg.exe"
+APP_NAME = "GUIDownloader"
+VERSION = "1.1.0"
+DEFAULT_DOWNLOAD_DIRECTORY = Path.home() / "Downloads"

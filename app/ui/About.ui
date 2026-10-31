@@ -29,7 +29,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>GUIDownloader | About</string>
+   <string>Acerca de GUIDownloader</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../images.qrc">
@@ -145,7 +145,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="version">
+       <widget class="QLabel" name="lbl_version">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -159,7 +159,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Versión 1.0.0 (Compilación de 03/03/2022 )</string>
+         <string>Versión</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -170,7 +170,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lbl_description">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -184,7 +184,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Una aplicación construida con Python y  Qt (PySide6).</string>
+         <string>Una aplicación construida con Python, Qt (PySide6) y yt-dlp.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -195,7 +195,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="lbl_versions">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -209,7 +209,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Python3.9 | | PySide6.2.3 | | PyTube12.0.0</string>
+         <string>Python | PySide6 | yt-dlp</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -220,7 +220,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lbl_repository">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -252,7 +252,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="copyright">
+       <widget class="QLabel" name="lbl_copyright">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
