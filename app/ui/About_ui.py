@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'AboutcHlvnb.ui'
+## Form generated from reading UI file 'About.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.1
+## Created by: Qt User Interface Compiler version 6.12.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
     QFrame, QGridLayout, QLabel, QSizePolicy,
-    QSpacerItem, QVBoxLayout)
+    QSpacerItem, QVBoxLayout, QWidget)
 import images_rc
 
 class Ui_Dialog(object):
@@ -32,7 +32,7 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         Dialog.setFont(font)
         icon = QIcon()
-        icon.addFile(u":/res/images/downloading.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/res/images/downloading.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setSizeGripEnabled(True)
         self.verticalLayout = QVBoxLayout(Dialog)
@@ -46,8 +46,8 @@ class Ui_Dialog(object):
         self.gridLayout.setContentsMargins(-1, -1, -1, 0)
         self.line = QFrame(self.top_frame)
         self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.gridLayout.addWidget(self.line, 2, 0, 1, 3)
 
@@ -63,11 +63,11 @@ class Ui_Dialog(object):
 
         self.gridLayout.addWidget(self.title, 1, 1, 1, 1)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout.addItem(self.horizontalSpacer_2, 0, 2, 1, 1)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout.addItem(self.horizontalSpacer, 0, 0, 1, 1)
 
@@ -91,58 +91,58 @@ class Ui_Dialog(object):
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(-1, 0, -1, -1)
-        self.version = QLabel(self.bottom_frame)
-        self.version.setObjectName(u"version")
-        self.version.setMaximumSize(QSize(16777215, 20))
+        self.lbl_version = QLabel(self.bottom_frame)
+        self.lbl_version.setObjectName(u"lbl_version")
+        self.lbl_version.setMaximumSize(QSize(16777215, 20))
         font2 = QFont()
         font2.setFamilies([u"Roboto"])
         font2.setPointSize(11)
-        self.version.setFont(font2)
-        self.version.setAlignment(Qt.AlignCenter)
-        self.version.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.lbl_version.setFont(font2)
+        self.lbl_version.setAlignment(Qt.AlignCenter)
+        self.lbl_version.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_3.addWidget(self.version)
+        self.verticalLayout_3.addWidget(self.lbl_version)
 
-        self.label = QLabel(self.bottom_frame)
-        self.label.setObjectName(u"label")
-        self.label.setMaximumSize(QSize(16777215, 20))
+        self.lbl_description = QLabel(self.bottom_frame)
+        self.lbl_description.setObjectName(u"lbl_description")
+        self.lbl_description.setMaximumSize(QSize(16777215, 20))
         font3 = QFont()
         font3.setFamilies([u"Roboto"])
         font3.setPointSize(12)
-        self.label.setFont(font3)
-        self.label.setAlignment(Qt.AlignCenter)
-        self.label.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.lbl_description.setFont(font3)
+        self.lbl_description.setAlignment(Qt.AlignCenter)
+        self.lbl_description.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_3.addWidget(self.label)
+        self.verticalLayout_3.addWidget(self.lbl_description)
 
-        self.label_2 = QLabel(self.bottom_frame)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setMaximumSize(QSize(16777215, 20))
-        self.label_2.setFont(font2)
-        self.label_2.setAlignment(Qt.AlignCenter)
-        self.label_2.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.lbl_versions = QLabel(self.bottom_frame)
+        self.lbl_versions.setObjectName(u"lbl_versions")
+        self.lbl_versions.setMaximumSize(QSize(16777215, 20))
+        self.lbl_versions.setFont(font2)
+        self.lbl_versions.setAlignment(Qt.AlignCenter)
+        self.lbl_versions.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_3.addWidget(self.label_2)
+        self.verticalLayout_3.addWidget(self.lbl_versions)
 
-        self.label_3 = QLabel(self.bottom_frame)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setMaximumSize(QSize(16777215, 20))
-        self.label_3.setFont(font2)
-        self.label_3.setAlignment(Qt.AlignCenter)
-        self.label_3.setOpenExternalLinks(True)
-        self.label_3.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.lbl_repository = QLabel(self.bottom_frame)
+        self.lbl_repository.setObjectName(u"lbl_repository")
+        self.lbl_repository.setMaximumSize(QSize(16777215, 20))
+        self.lbl_repository.setFont(font2)
+        self.lbl_repository.setAlignment(Qt.AlignCenter)
+        self.lbl_repository.setOpenExternalLinks(True)
+        self.lbl_repository.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_3.addWidget(self.label_3)
+        self.verticalLayout_3.addWidget(self.lbl_repository)
 
-        self.copyright = QLabel(self.bottom_frame)
-        self.copyright.setObjectName(u"copyright")
-        self.copyright.setMaximumSize(QSize(16777215, 20))
-        self.copyright.setFont(font2)
-        self.copyright.setAlignment(Qt.AlignCenter)
-        self.copyright.setOpenExternalLinks(True)
-        self.copyright.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
+        self.lbl_copyright = QLabel(self.bottom_frame)
+        self.lbl_copyright.setObjectName(u"lbl_copyright")
+        self.lbl_copyright.setMaximumSize(QSize(16777215, 20))
+        self.lbl_copyright.setFont(font2)
+        self.lbl_copyright.setAlignment(Qt.AlignCenter)
+        self.lbl_copyright.setOpenExternalLinks(True)
+        self.lbl_copyright.setTextInteractionFlags(Qt.LinksAccessibleByMouse|Qt.TextSelectableByMouse)
 
-        self.verticalLayout_3.addWidget(self.copyright)
+        self.verticalLayout_3.addWidget(self.lbl_copyright)
 
         self.btn_box = QDialogButtonBox(self.bottom_frame)
         self.btn_box.setObjectName(u"btn_box")
@@ -160,17 +160,17 @@ class Ui_Dialog(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"GUIDownloader | About", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Acerca de GUIDownloader", None))
         self.title.setText(QCoreApplication.translate("Dialog", u"GUIDownloader", None))
-        self.version.setText(QCoreApplication.translate("Dialog", u"Versi\u00f3n 1.0.0 (Compilaci\u00f3n de 03/03/2022 )", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Una aplicaci\u00f3n construida con Python y  Qt (PySide6).", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"Python3.9 | | PySide6.2.3 | | PyTube12.0.0", None))
-        self.label_3.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.lbl_version.setText(QCoreApplication.translate("Dialog", u"Versi\u00f3n", None))
+        self.lbl_description.setText(QCoreApplication.translate("Dialog", u"Una aplicaci\u00f3n construida con Python, Qt (PySide6) y yt-dlp.", None))
+        self.lbl_versions.setText(QCoreApplication.translate("Dialog", u"Python | PySide6 | yt-dlp", None))
+        self.lbl_repository.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Roboto'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Proyecto disponible en: <a href=\"https://www.github.com/caicesardev/GUIDownloader\">https://www.github.com/caicesardev/GUIDownloader</a></p></body></html>", None))
-        self.copyright.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.lbl_copyright.setText(QCoreApplication.translate("Dialog", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Roboto'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
